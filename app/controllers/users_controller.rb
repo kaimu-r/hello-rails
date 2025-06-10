@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     # ユーザーの削除を実行
     @user.destroy
 
-    redirect_to root_path, status: :see_other
+    redirect_to users_path, status: :see_other
   end
 
   private
