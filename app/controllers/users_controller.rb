@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   # ユーザー詳細ページ
   def show
-    @user = set_user
+    @user = User.find(params[:id])
   end
 
   # 新規ユーザー作成ページ
@@ -32,12 +32,12 @@ class UsersController < ApplicationController
 
   # ユーザー編集ページ
   def edit
-    @user = set_user
+    @user = User.find(params[:id])
   end
 
   # ユーザー編集
   def update
-    @user = set_user
+    @user = User.find(params[:id])
 
     # ユーザーの更新処理を行う
     if @user.update(user_params)
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
   # ユーザー削除
   def destroy
-    @user = set_user
+    @user = User.find(params[:id])
     # ユーザーの削除を実行
     @user.destroy
 
@@ -65,12 +65,5 @@ class UsersController < ApplicationController
       #【Railsガイド paramsについて】https://railsguides.jp/action_controller_overview.html#%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF
       #【Rails API ActionController::Parameters】https://api.rubyonrails.org/v8.0/classes/ActionController/Parameters.html
       params.require(:user).permit(:name)
-    end
-
-    # idに基づいてユーザーを取得
-    def set_user
-      # ユーザーをIDで検索
-      #【Railsガイド Active Record】https://railsguides.jp/v7.0/active_record_basics.html
-      @user = User.find(params[:id])
     end
 end
