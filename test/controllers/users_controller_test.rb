@@ -1,7 +1,7 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
+  test "ユーザー一覧画面の表示" do
     # ユーザー一覧ページにGETリクエストを送信
     # users_urlメソッドを使用して、ユーザー一覧ページのURLを取得
     get users_url
@@ -10,7 +10,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create user" do
+  test "ユーザーの作成" do
     # POSTリクエスト送信後にユーザーが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、Userモデルのレコード数が1増えることを確認
     assert_difference("User.count") do
@@ -20,7 +20,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
-  test "should not create user with invalid params" do
+  test "無効なパラメータでユーザーを作成できないこと" do
     # POSTリクエスト送信後にユーザーが作成されないことを確認
     assert_no_difference("User.count") do
       post users_url, params: { user: { name: "" } }
@@ -29,7 +29,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should get new" do
+  test "ユーザー新規作成ページの表示" do
     # ユーザー新規作成ページにGETリクエストを送信
     get new_user_url
 
@@ -37,7 +37,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
+  test "ユーザー編集ページの表示" do
     # create!メソッドを使用してテストユーザーを作成してINSERTする
     user = User.create!(name: "test_user")
 
@@ -48,7 +48,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get show" do
+  test "ユーザー詳細ページの表示" do
     # createメソッドを使用しテストユーザーを作成してINSERTする
     # データが必ず有効で保存されることを前提にするためにcreate!で保存失敗時に例外を発生させる
     user = User.create!(name: "test_user")
@@ -61,7 +61,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update user" do
+  test "ユーザー情報の更新" do
     # create!メソッドを使用しテストユーザーを作成してINSERTする
     user = User.create!(name: "test_user")
 
@@ -80,7 +80,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "updated_user", user.name
   end
 
-  test "should not update user with invalid params" do
+  test "無効なパラメータでユーザーを更新できないこと" do
     # create!メソッドを使用してテストユーザーを作成してINSERTする
     user = User.create!(name: "test_user")
     # PATCHリクエストを送信してユーザー情報を更新
@@ -98,7 +98,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "test_user", user.name
   end
 
-  test "should destroy user" do
+  test "ユーザーの削除" do
     # create!メソッドを使用してテストユーザーを作成してINSERTする
     user = User.create!(name: "test_user")
 
