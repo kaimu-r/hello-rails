@@ -38,8 +38,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ユーザー編集ページの表示" do
-    # create!メソッドを使用してテストユーザーを作成してINSERTする
-    user = User.create!(name: "test_user")
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:one)
 
     # 作成したユーザーの編集ページにGETリクエストを送信
     get edit_user_url(user)
@@ -49,9 +49,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ユーザー詳細ページの表示" do
-    # createメソッドを使用しテストユーザーを作成してINSERTする
-    # データが必ず有効で保存されることを前提にするためにcreate!で保存失敗時に例外を発生させる
-    user = User.create!(name: "test_user")
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:one)
 
     # 作成したユーザーの詳細ページにGETリクエストを送信
     # user_urlメソッドを使用して、ユーザーの詳細ページのURLを取得
@@ -62,8 +61,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ユーザー情報の更新" do
-    # create!メソッドを使用しテストユーザーを作成してINSERTする
-    user = User.create!(name: "test_user")
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:one)
 
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
@@ -81,8 +80,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "無効なパラメータでユーザーを更新できないこと" do
-    # create!メソッドを使用してテストユーザーを作成してINSERTする
-    user = User.create!(name: "test_user")
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:one)
+
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
     assert_no_difference("User.count") do
@@ -99,8 +99,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ユーザーの削除" do
-    # create!メソッドを使用してテストユーザーを作成してINSERTする
-    user = User.create!(name: "test_user")
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:one)
 
     # DELETEリクエストを送信してユーザーを削除
     # assert_differenceメソッドを使用して、Userモデルのレコード数が1減ることを確認
