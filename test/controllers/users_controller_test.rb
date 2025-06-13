@@ -39,7 +39,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ユーザー編集ページの表示" do
     # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:one)
+    user = users(:test_user)
 
     # 作成したユーザーの編集ページにGETリクエストを送信
     get edit_user_url(user)
@@ -50,7 +50,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ユーザー詳細ページの表示" do
     # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:one)
+    user = users(:test_user)
 
     # 作成したユーザーの詳細ページにGETリクエストを送信
     # user_urlメソッドを使用して、ユーザーの詳細ページのURLを取得
@@ -62,7 +62,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ユーザー情報の更新" do
     # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:one)
+    user = users(:test_user)
 
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
@@ -81,7 +81,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "無効なパラメータでユーザーを更新できないこと" do
     # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:one)
+    user = users(:test_user)
 
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
@@ -100,7 +100,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ユーザーの削除" do
     # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:one)
+    user = users(:test_user)
 
     # DELETEリクエストを送信してユーザーを削除
     # assert_differenceメソッドを使用して、Userモデルのレコード数が1減ることを確認
