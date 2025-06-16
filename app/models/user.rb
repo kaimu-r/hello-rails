@@ -12,15 +12,15 @@ class User < ApplicationRecord
 
     validates :gender,
               presence: true, # genderは必須
-              inclusion: { in: genders.keys } # genderは男性、女性、その他のいずれかであることを検証
+              inclusion: { in: genders.keys, allow_blank: true } # genderは男性、女性、その他のいずれかであることを検証
 
     validates :birth_date,
               presence: true, # birth_dateは必須
-              comparison: { less_than_or_equal_to: Date.today} # 今日以前の日付であることを検証
+              comparison: { less_than_or_equal_to: Date.today, allow_blank: true } # 今日以前の日付であることを検証
 
     validates :email,
               presence: true, # emailは必須
-              format: { with: URI::MailTo::EMAIL_REGEXP }, # メールアドレスの形式が正しいことを検証
+              format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }, # メールアドレスの形式が正しいことを検証
               uniqueness: { case_sensitive: false } # emailは一意であることを検証(大文字小文字を区別しない)
 
     validates :home_phone,
@@ -49,6 +49,5 @@ class User < ApplicationRecord
               presence: true # address_blockは必須
 
     validates :building,
-              length: { maximum: 50 }, # 最大文字数は50
-              allow_blank: true # buildingは空でも良い
+              length: { maximum: 50 } # 最大文字数は50
 end
