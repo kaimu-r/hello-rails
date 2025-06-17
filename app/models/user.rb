@@ -12,16 +12,16 @@ class User < ApplicationRecord
 
     validates :gender,
               presence: { message: "を選択してください" }, # genderは必須
-              inclusion: { in: genders.keys, allow_blank: true } # genderは男性、女性、その他のいずれかであることを検証
+              inclusion: { in: genders.keys, allow_blank: true, message: "不正な値です" } # genderは男性、女性、その他のいずれかであることを検証
 
     validates :birth_date,
               presence: { message: "を入力してください" }, # birth_dateは必須
-              comparison: { less_than_or_equal_to: Date.today, allow_blank: true } # 今日以前の日付であることを検証
+              comparison: { less_than_or_equal_to: Proc.new{ Date.today }, allow_blank: true, message: "は今日以前の日付である必要があります" } # 今日以前の日付であることを検証
 
     validates :email,
               presence: { message: "を入力してください" }, # emailは必須
-              format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }, # メールアドレスの形式が正しいことを検証
-              uniqueness: { case_sensitive: false } # emailは一意であることを検証(大文字小文字を区別しない)
+              format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true, message: "は不正なメールアドレスです" }, # メールアドレスの形式が正しいことを検証
+              uniqueness: { case_sensitive: false, message: "はすでに存在します" } # emailは一意であることを検証(大文字小文字を区別しない)
 
     validates :home_phone,
               presence: { message: "を入力してください" }, # home_phoneは必須
