@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+    # ユーザーは1つの部署に所属する
+    belongs_to :department
+
     # ユーザーの性別
     enum :gender, { male: 0, female: 1, other: 2 }
 
