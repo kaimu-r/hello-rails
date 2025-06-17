@@ -3,51 +3,53 @@ class User < ApplicationRecord
     enum :gender, { male: 0, female: 1, other: 2 }
 
     validates :full_name,
-              presence: true, # full_nameは必須
+              presence: { message: "を入力してください" }, # full_nameは必須
               length: { maximum: 50 } # full_nameの最大文字数は50
 
     validates :full_name_kana,
-              presence: true, # full_name_kanaは必須
+              presence: { message: "を入力してください" }, # full_name_kanaは必須
               length: { maximum: 50 } # full_name_kanaの最大文字数は50
 
     validates :gender,
-              presence: true, # genderは必須
+              presence: { message: "を選択してください" }, # genderは必須
               inclusion: { in: genders.keys, allow_blank: true } # genderは男性、女性、その他のいずれかであることを検証
 
     validates :birth_date,
-              presence: true, # birth_dateは必須
+              presence: { message: "を入力してください" }, # birth_dateは必須
               comparison: { less_than_or_equal_to: Date.today, allow_blank: true } # 今日以前の日付であることを検証
 
     validates :email,
-              presence: true, # emailは必須
+              presence: { message: "を入力してください" }, # emailは必須
               format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }, # メールアドレスの形式が正しいことを検証
               uniqueness: { case_sensitive: false } # emailは一意であることを検証(大文字小文字を区別しない)
 
     validates :home_phone,
-              presence: true # home_phoneは必須
+              presence: { message: "を入力してください" }, # home_phoneは必須
+              phone_format: true # 電話番号の形式を検証
 
     validates :mobile_phone,
-              presence: true # mobile_phoneは必須
+              phone_format: true, # 電話番号の形式を検証
+              uniqueness: { allow_blank: true, message: "はすでに存在します" } # 一意であることを検証
 
     validates :postal_code,
-              presence: true, # postal_codeは必須
-              length: { maximum: 7 } # 最大文字数は7 参考: https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E9%83%B5%E4%BE%BF%E7%95%AA%E5%8F%B7
+              presence: { message: "を入力してください" }, # postal_codeは必須
+              length: { maximum: 7, message: "は7桁以内で入力してください" } # 最大文字数は7 参考: https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%AE%E9%83%B5%E4%BE%BF%E7%95%AA%E5%8F%B7
 
     validates :prefecture,
-              presence: true # prefectureは必須
+              presence: { message: "を入力してください" } # prefectureは必須
 
     validates :city,
-              presence: true, # cityは必須
-              length: { maximum: 20 } # 最大文字数は20
+              presence: { message: "を入力してください" }, # cityは必須
+              length: { maximum: 20, message: "は20文字以内で入力してください" } # 最大文字数は20
 
     validates :town,
-              length: { maximum: 20 }, # 最大文字数は20
-              presence: true # townは必須
+              presence: { message: "を入力してください" }, # townは必須
+              length: { maximum: 20, message: "は20文字以内で入力してください" } # 最大文字数は20
 
     validates :address_block,
-              length: { maximum: 50 }, # 最大文字数は50
-              presence: true # address_blockは必須
+              presence: { message: "を入力してください" }, # address_blockは必須
+              length: { maximum: 50, message: "は50文字以内で入力してください" } # 最大文字数は50
 
     validates :building,
-              length: { maximum: 50 } # 最大文字数は50
+              length: { maximum: 50, message: "は50文字以内で入力してください" } # 最大文字数は50
 end
