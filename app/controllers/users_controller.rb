@@ -61,9 +61,11 @@ class UsersController < ApplicationController
   private
     # 新規作成・更新時に受け取って良いパラメータを定義
     def user_params
-      # paramsからuserキーのname属性のみを許可
+      # params.require(:user)で`user`キーを必須とし、permitメソッドで許可する属性を指定
       #【Railsガイド paramsについて】https://railsguides.jp/action_controller_overview.html#%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF
       #【Rails API ActionController::Parameters】https://api.rubyonrails.org/v8.0/classes/ActionController/Parameters.html
-      params.require(:user).permit(:name)
+      params
+        .require(:user)
+        .permit(:full_name, :full_name_kana, :gender, :birth_date, :email, :home_phone, :mobile_phone, :postal_code, :prefecture, :city, :town, :address_block, :building)
     end
 end

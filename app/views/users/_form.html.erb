@@ -1,10 +1,103 @@
 <%= form_with model: @user do |form| %>
     <div>
-        <%= form.label :name, "ユーザー名" %><br>
-        <%= form.text_field :name %>
-        <% @user.errors.full_messages_for(:name).each do |message| %>
-            <div><%= message %></div>
-        <% end %>
+        <div>
+            <%= form.label :full_name, "名前" %>
+            <%= form.text_field :full_name %>
+            <% @user.errors.full_messages_for(:full_name).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :full_name_kana, "名前（カナ）" %>
+            <%= form.text_field :full_name_kana %>
+            <% @user.errors.full_messages_for(:full_name_kana).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :gender, "性別" %>
+                <%= form.select :gender,
+                    [
+                        ["男",  "male"],
+                        ["女",  "female"],
+                        ["その他", "other"]
+                    ],
+                    { prompt: "選択してください" } %>
+                <% @user.errors.full_messages_for(:gender).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :birth_date, "生年月日" %>
+            <%= form.date_select :birth_date, start_year: 1900, end_year: Date.current.year %>
+            <% @user.errors.full_messages_for(:birth_date).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :email, "メールアドレス" %>
+            <%= form.email_field :email %>
+            <% @user.errors.full_messages_for(:email).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :home_phone, "自宅電話" %>
+            <%= form.telephone_field :home_phone %>
+            <% @user.errors.full_messages_for(:home_phone).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :mobile_phone, "携帯電話" %>
+            <%= form.telephone_field :mobile_phone %>
+            <% @user.errors.full_messages_for(:mobile_phone).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :postal_code, "郵便番号" %>
+            <%= form.text_field :postal_code %>
+            <% @user.errors.full_messages_for(:postal_code).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :prefecture, "都道府県" %>
+            <%= form.text_field :prefecture %>
+            <% @user.errors.full_messages_for(:prefecture).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :city, "市区町村" %>
+            <%= form.text_field :city %>
+            <% @user.errors.full_messages_for(:city).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :town, "町名" %>
+            <%= form.text_field :town %>
+            <% @user.errors.full_messages_for(:town).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :address_block, "丁目・番地・号" %>
+            <%= form.text_field :address_block %>
+            <% @user.errors.full_messages_for(:address_block).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
+            <%= form.label :building, "建物名" %>
+            <%= form.text_field :building %>
+            <% @user.errors.full_messages_for(:building).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
     </div>
 
     <div>

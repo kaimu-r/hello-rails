@@ -1,10 +1,41 @@
-<h1><%= @user.name %></h1>
+<h1><%= @user.full_name %></h1>
 
-<ul>
-    <li><%= link_to "ユーザー名の編集", edit_user_path(@user) %></li>
-    <li><%= link_to "ユーザーを削除", user_path(@user), data: {
-        turbo_method: :delete,
-        turbo_confirm: "本当に削除しますか？"
-    } %></li>
-    <li><%= link_to "ユーザー一覧に戻る", users_path %></li>
-</ul>
+<section>
+    <h2>基本情報</h2>
+    <ul>
+        <li>氏名：<%= @user.full_name %></li>
+        <li>氏名（カナ）：<%= @user.full_name_kana.presence || "未登録" %></li>
+        <li>
+            性別：<%= @user.gender.present? ? { male: "男", female: "女", other: "その他" }[@user.gender.to_sym] : "未登録" %>
+        </li>
+        <li>生年月日：<%= @user.birth_date&.strftime("%Y年%m月%d日") || "未登録" %></li>
+    </ul>
+
+    <h2>連絡先</h2>
+    <ul>
+        <li>メールアドレス：<%= @user.email.presence || "未登録" %></li>
+        <li>自宅電話：<%= @user.home_phone.presence || "未登録" %></li>
+        <li>携帯電話：<%= @user.mobile_phone.presence || "未登録" %></li>
+    </ul>
+
+    <h2>住所</h2>
+    <ul>
+        <li>郵便番号：<%= @user.postal_code.presence || "未登録" %></li>
+        <li>都道府県：<%= @user.prefecture.presence || "未登録" %></li>
+        <li>市区町村：<%= @user.city.presence || "未登録" %></li>
+        <li>番地：<%= @user.address_block.presence || "未登録" %></li>
+        <li>建物名：<%= @user.building.presence || "未登録" %></li>
+    </ul>
+</section>
+
+<section>
+    <h2>操作</h2>
+    <ul>
+        <li><%= link_to "ユーザー名の編集", edit_user_path(@user) %></li>
+        <li><%= link_to "ユーザーを削除", user_path(@user), data: {
+            turbo_method: :delete,
+            turbo_confirm: "本当に削除しますか？"
+        } %></li>
+        <li><%= link_to "ユーザー一覧に戻る", users_path %></li>
+    </ul>
+</section>
