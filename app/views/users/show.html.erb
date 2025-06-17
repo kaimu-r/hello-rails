@@ -6,8 +6,7 @@
         <li>氏名：<%= @user.full_name %></li>
         <li>氏名（カナ）：<%= @user.full_name_kana.presence || "未登録" %></li>
         <li>
-            性別：
-            <%= { 0 => "男", 1 => "女", 2 => "その他" }[@user.gender].presence || "未登録" %>
+            性別：<%= @user.gender.present? ? { male: "男", female: "女", other: "その他" }[@user.gender.to_sym] : "未登録" %>
         </li>
         <li>生年月日：<%= @user.birth_date&.strftime("%Y年%m月%d日") || "未登録" %></li>
     </ul>

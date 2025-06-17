@@ -16,12 +16,14 @@
         </div>
         <div>
             <%= form.label :gender, "性別" %><br>
-            <%= form.select :gender,
-                    [ ["男",  "male"],
-                    ["女",  "female"],
-                    ["その他", "other"] ],
+                <%= form.select :gender,
+                    [
+                        ["男",  "male"],
+                        ["女",  "female"],
+                        ["その他", "other"]
+                    ],
                     { prompt: "選択してください" } %>
-            <% @user.errors.full_messages_for(:gender).each do |message| %>
+                <% @user.errors.full_messages_for(:gender).each do |message| %>
                 <div><%= message %></div>
             <% end %>
         </div>
