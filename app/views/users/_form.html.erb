@@ -42,6 +42,15 @@
             <% end %>
         </div>
         <div>
+            <%= form.label :department_id, "部署" %>
+            <%= form.collection_select :department_id,
+                    Department.all, :id, :name,
+                    { prompt: "選択してください" } %>
+            <% @user.errors.full_messages_for(:department).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+        <div>
             <%= form.label :home_phone, "自宅電話" %>
             <%= form.telephone_field :home_phone %>
             <% @user.errors.full_messages_for(:home_phone).each do |message| %>
