@@ -66,6 +66,6 @@ class UsersController < ApplicationController
       #【Rails API ActionController::Parameters】https://api.rubyonrails.org/v8.0/classes/ActionController/Parameters.html
       params
         .require(:user)
-        .permit(:full_name, :full_name_kana, :gender, :birth_date, :email, :home_phone, :mobile_phone, :postal_code, :prefecture, :city, :town, :address_block, :building)
+        .permit(:full_name, :full_name_kana, :gender, :birth_date, :email, :home_phone, :mobile_phone, :postal_code, :prefecture, :city, :town, :address_block, :building, :department_id)
     end
 end
