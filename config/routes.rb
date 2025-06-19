@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   # 【resources 参考文献】https://api.rubyonrails.org/v8.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
   resources :users
 
+  # 部署に関するルーティングを定義
+  resources :departments
+
   # resourcesの代わりに個別でルーティングを定義する場合
   # get 'users', to: 'users#index'
   # post 'users/create', to: 'users#create'
