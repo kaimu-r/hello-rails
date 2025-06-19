@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # 新規作成・編集時に部署情報をセット
+  before_action :set_departments, only: [:new, :edit]
+
   # ユーザー一覧ページ
   def index
     @users = User.all
@@ -67,5 +70,11 @@ class UsersController < ApplicationController
       params
         .require(:user)
         .permit(:full_name, :full_name_kana, :gender, :birth_date, :email, :home_phone, :mobile_phone, :postal_code, :prefecture, :city, :town, :address_block, :building, :department_id)
+    end
+
+    # 新規作成・編集時に部署情報をセット
+    def set_departments
+      # 部署情報を全て取得
+      @departments = Department.all
     end
 end
