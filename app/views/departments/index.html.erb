@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>部署一覧</h1>
+
+<ul id="departments">
+  <% @departments.each do |department| %>
+    <li>
+      <%= link_to department.name, department %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "新しい部署を作成", new_department_path %>

@@ -1,0 +1,13 @@
+<%= form_with model: @department do |form| %>
+  <div>
+    <%= form.label :name, "部署名" %>
+    <%= form.text_field :name %>
+    <% @department.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "保存" %>
+  </div>
+<% end %>
