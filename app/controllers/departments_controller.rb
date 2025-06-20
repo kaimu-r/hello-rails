@@ -7,6 +7,7 @@ class DepartmentsController < ApplicationController
   # 部署詳細ページ
   def show
     @department = Department.find(params[:id])
+    @users = @department.users
   end
 
   # 部署新規作成ページ
