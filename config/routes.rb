@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # 部署に関するルーティングを定義
   resources :departments
 
+  # スキルに関するルーティングを定義
+  resources :skills
+
   # resourcesの代わりに個別でルーティングを定義する場合
   # get 'users', to: 'users#index'
   # post 'users/create', to: 'users#create'
