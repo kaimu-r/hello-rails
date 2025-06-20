@@ -12,7 +12,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   test "部署の作成" do
     # POSTリクエスト送信後に部署が作成されたかどうかを確認する
     assert_difference("Department.count") do
-      post departments_url, params: { department: { name: "test_department" } }
+      post departments_url, params: { department: { name: "add_department" } }
     end
 
     # レスポンスがリダイレクトであることを確認
