@@ -1,8 +1,4 @@
 class UsersController < ApplicationController
-  # 新規作成・編集時に部署情報をセット
-  before_action :set_departments, only: [:new, :edit]
-  before_action :set_skills, only: [:new, :edit]
-
   # ユーザー一覧ページ
   def index
     @users = User.all
@@ -17,6 +13,8 @@ class UsersController < ApplicationController
   # 新規ユーザー作成ページ
   def new
     @user = User.new
+    @departments = Department.all
+    @skills = Skill.all
   end
 
   # 新規ユーザー作成
@@ -38,6 +36,8 @@ class UsersController < ApplicationController
   # ユーザー編集ページ
   def edit
     @user = User.find(params[:id])
+    @departments = Department.all
+    @skills = Skill.all
   end
 
   # ユーザー編集
@@ -77,16 +77,5 @@ class UsersController < ApplicationController
           :prefecture, :city, :town, :address_block, :building,
           :department_id, skill_ids: []
         )
-    end
-
-    # 新規作成・編集時に部署情報をセット
-    def set_departments
-      # 部署情報を全て取得
-      @departments = Department.all
-    end
-
-    def set_skills
-      # スキル情報を全て取得
-      @skills = Skill.all
     end
 end
