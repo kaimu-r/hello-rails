@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   # 新規作成・編集時に部署情報をセット
   before_action :set_departments, only: [:new, :edit]
+  before_action :set_skills, only: [:new, :edit]
 
   # ユーザー一覧ページ
   def index
@@ -10,6 +11,7 @@ class UsersController < ApplicationController
   # ユーザー詳細ページ
   def show
     @user = User.find(params[:id])
+    @skills = @user.skills
   end
 
   # 新規ユーザー作成ページ
@@ -69,12 +71,22 @@ class UsersController < ApplicationController
       #【Rails API ActionController::Parameters】https://api.rubyonrails.org/v8.0/classes/ActionController/Parameters.html
       params
         .require(:user)
-        .permit(:full_name, :full_name_kana, :gender, :birth_date, :email, :home_phone, :mobile_phone, :postal_code, :prefecture, :city, :town, :address_block, :building, :department_id)
+        .permit(
+          :full_name, :full_name_kana, :gender, :birth_date,
+          :email, :home_phone, :mobile_phone, :postal_code,
+          :prefecture, :city, :town, :address_block, :building,
+          :department_id, skill_ids: []
+        )
     end
 
     # 新規作成・編集時に部署情報をセット
     def set_departments
       # 部署情報を全て取得
       @departments = Department.all
+    end
+
+    def set_skills
+      # スキル情報を全て取得
+      @skills = Skill.all
     end
 end

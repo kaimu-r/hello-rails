@@ -51,6 +51,17 @@
             <% end %>
         </div>
         <div>
+            <p>スキル</p>
+            <% @skills.each do |skill| %>
+                <label>
+                <%= check_box_tag "user[skill_ids][]",
+                                    skill.id,
+                                    @user.skill_ids.include?(skill.id) %>
+                <%= skill.name %>
+                </label>
+            <% end %>
+        </div>
+        <div>
             <%= form.label :home_phone, "自宅電話" %>
             <%= form.telephone_field :home_phone %>
             <% @user.errors.full_messages_for(:home_phone).each do |message| %>
