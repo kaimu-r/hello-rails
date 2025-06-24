@@ -1,7 +1,53 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  test "ユーザー一覧画面の表示" do
+  # createで使用するparameter
+  def valid_create_params
+    {
+      user: {
+        full_name: "テストユーザー",
+        full_name_kana: "テスト ユーザー",
+        gender: "male",
+        email: "new@example.com",
+        home_phone: "99999999999",
+        mobile_phone: "88888888888",
+        postal_code: "7776666",
+        prefecture: "北海道",
+        city: "札幌市",
+        town: "中央区北",
+        address_block: "１条西２丁目１",
+        building: "",
+        birth_date: "2020-06-17",
+        department_id: departments(:test_department).id,
+        skill_ids: ["1"]
+      }
+    }
+  end
+
+  # updateで使用するparameter
+  def valid_update_params
+    {
+      user: {
+        full_name: "updated_user",
+        full_name_kana: "アップデート ユーザー",
+        gender: "male",
+        email: "new@example.com",
+        home_phone: "99999999999",
+        mobile_phone: "88888888888",
+        postal_code: "7776666",
+        prefecture: "北海道",
+        city: "札幌市",
+        town: "中央区北",
+        address_block: "１条西２丁目１",
+        building: "",
+        birth_date: "2020-06-17",
+        department_id: departments(:test_department).id,
+        skill_ids: ["2"]
+      }
+    }
+  end
+
+  test "GET /users でユーザー一覧ページが表示される" do
     # ユーザー一覧ページにGETリクエストを送信
     # users_urlメソッドを使用して、ユーザー一覧ページのURLを取得
     get users_url
@@ -10,26 +56,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ユーザーの作成" do
-    # POSTリクエスト送信後にユーザーが作成されたかどうかを確認する
-    # assert_differenceメソッドを使用して、Userモデルのレコード数が1増えることを確認
-    assert_difference("User.count") do
-      post users_url, params: { user: { name: "test_user" } }
+  test "POST /users でユーザーとユーザースキルが1件ずつ増える" do
+    # parameterを定義
+    params = valid_create_params
+    # POSTリクエスト送信後にユーザーとユーザースキルが作成されたかどうかを確認する
+    # assert_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が1増えることを確認
+    assert_difference(["User.count", "UserSkill.count"]) do
+      post users_url, params: params
     end
     # レスポンスがリダイレクトであることを確認
     assert_response :redirect
   end
 
-  test "無効なパラメータでユーザーを作成できないこと" do
+  test "POST /users で無効パラメータの場合は作成されない" do
     # POSTリクエスト送信後にユーザーが作成されないことを確認
     assert_no_difference("User.count") do
-      post users_url, params: { user: { name: "" } }
+      post users_url, params: { user: { full_name: "" } }
     end
     # レスポンスが422番であることを確認
     assert_response :unprocessable_entity
   end
 
-  test "ユーザー新規作成ページの表示" do
+  test "GET /users/new で新規作成フォームが表示される" do
     # ユーザー新規作成ページにGETリクエストを送信
     get new_user_url
 
@@ -37,7 +85,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ユーザー編集ページの表示" do
+  test "GET /users/:id/edit で編集フォームが表示される" do
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
@@ -48,7 +96,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ユーザー詳細ページの表示" do
+  test "GET /users/:id でユーザー詳細ページが表示される" do
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
@@ -60,14 +108,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ユーザー情報の更新" do
+  test "PATCH /users/:id でユーザー情報とユーザースキルを更新できる" do
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
-    # PATCHリクエストを送信してユーザー情報を更新
-    # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
+    # 更新するパラメータを定義
+    params = valid_update_params
+    # PATCHリクエストを送信してユーザー情報とユーザースキル情報を更新
+    # assert_no_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が変わらないことを確認
     assert_no_difference("User.count") do
-      patch user_url(user), params: { user: { name: "updated_user" } }
+      patch user_url(user), params: params
     end
 
     # レスポンスがリダイレクトであることを確認
@@ -76,17 +126,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # 更新後のユーザー情報を取得
     user.reload
     # ユーザー名が更新されていることを確認
-    assert_equal "updated_user", user.name
+    assert_equal "updated_user", user.full_name
   end
 
-  test "無効なパラメータでユーザーを更新できないこと" do
+  test "PATCH /users/:id で無効パラメータの場合は更新されない" do
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
     assert_no_difference("User.count") do
-      patch user_url(user), params: { user: { name: "" } }
+      patch user_url(user), params: { user: { full_name: "" } }
     end
 
     # レスポンスが422番であることを確認
@@ -95,10 +145,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # 更新後のユーザー情報を取得
     user.reload
     # ユーザー名が更新されていないことを確認
-    assert_equal "test_user", user.name
+    assert_equal "test_user", user.full_name
   end
 
-  test "ユーザーの削除" do
+  test "DELETE /users/:id でユーザーが 1 件減る" do
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
