@@ -20,6 +20,8 @@ class UsersController < ApplicationController
   # 新規ユーザー作成
   def create
     @user = User.new(user_params)
+    @departments = Department.all
+    @skills = Skill.all
 
     if @user.save
       # ユーザー詳細にリダイレクト
@@ -43,6 +45,8 @@ class UsersController < ApplicationController
   # ユーザー編集
   def update
     @user = User.find(params[:id])
+    @departments = Department.all
+    @skills = Skill.all
 
     # ユーザーの更新処理を行う
     if @user.update(user_params)
