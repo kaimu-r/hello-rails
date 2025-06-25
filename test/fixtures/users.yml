@@ -5,4 +5,17 @@
 # below each fixture, per the syntax in the comments below
 #
 test_user:
-  name: "test_user"
+  full_name: "test_user"
+  full_name_kana: "テスト ユーザー"
+  gender: 1
+  email: "test@example.com"
+  home_phone: "00000000000"
+  mobile_phone: "11111111111"
+  postal_code: "22223333"
+  prefecture: "北海道"
+  city: "札幌市"
+  town: "中央区北"
+  address_block: "１条西２丁目１"
+  building: ""
+  birth_date: "2020-06-17"
+  department_id: 1

@@ -12,6 +12,21 @@
         <li>部署：<%= link_to @user.department.name, @user.department || "未登録" %></li>
     </ul>
 
+    <h2>スキル</h2>
+    <ul>
+        <% if @skills.any? %>
+            <% @skills.each do |skill| %>
+                <li>
+                <%= link_to skill.name, skill_path(skill) %>
+                </li>
+            <% end %>
+        <% else %>
+            <li>未登録</li>
+        <% end %>
+    </ul>
+
+    </ul>
+
     <h2>連絡先</h2>
     <ul>
         <li>メールアドレス：<%= @user.email.presence || "未登録" %></li>

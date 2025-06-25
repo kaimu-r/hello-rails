@@ -1,5 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-test_department:
+test_skill:
   id: 1
-  name: "test_department"
+  name: "test_skill"
+
+test_skill2:
+  id: 2
+  name: "test_skill2"

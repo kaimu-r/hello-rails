@@ -1,0 +1,13 @@
+<%= form_with model: @skill do |form| %>
+  <div>
+    <%= form.label :name, "スキル名" %>
+    <%= form.text_field :name %>
+    <% @skill.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "保存" %>
+  </div>
+<% end %>

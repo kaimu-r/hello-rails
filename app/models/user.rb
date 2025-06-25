@@ -2,6 +2,10 @@ class User < ApplicationRecord
     # ユーザーは1つの部署に所属する
     belongs_to :department
 
+    # ユーザーはUserSkillsモデルを経由して複数のスキルを所有する
+    has_many :user_skills
+    has_many :skills, through: :user_skills
+
     # ユーザーの性別
     enum :gender, { male: 0, female: 1, other: 2 }
 
