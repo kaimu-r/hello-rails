@@ -1,6 +1,6 @@
 desc "CSV をインポートして User を作成する"
-namespace :import do
-  task :users, [:file_path] => :environment do |_, args|
+namespace :users do
+  task :import, [:file_path] => :environment do |_, args|
     abort "ファイルパスを指定してください。" unless args.file_path
 
     file_path = Rails.root.join(args.file_path)
