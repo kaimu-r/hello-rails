@@ -49,8 +49,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "GET /users でユーザー一覧ページが表示される" do
     # ユーザー一覧ページにGETリクエストを送信
-    # users_urlメソッドを使用して、ユーザー一覧ページのURLを取得
-    get users_url
+    # admin_users_urlメソッドを使用して、ユーザー一覧ページのURLを取得
+    get admin_users_url
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -62,7 +62,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # POSTリクエスト送信後にユーザーとユーザースキルが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が1増えることを確認
     assert_difference(["User.count", "UserSkill.count"]) do
-      post users_url, params: params
+      post admin_users_url, params: params
     end
     # レスポンスがリダイレクトであることを確認
     assert_response :redirect
@@ -71,7 +71,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "POST /users で無効パラメータの場合は作成されない" do
     # POSTリクエスト送信後にユーザーが作成されないことを確認
     assert_no_difference("User.count") do
-      post users_url, params: { user: { full_name: "" } }
+      post admin_users_url, params: { user: { full_name: "" } }
     end
     # レスポンスが422番であることを確認
     assert_response :unprocessable_entity
@@ -79,7 +79,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "GET /users/new で新規作成フォームが表示される" do
     # ユーザー新規作成ページにGETリクエストを送信
-    get new_user_url
+    get new_admin_user_url
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -90,7 +90,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     user = users(:test_user)
 
     # 作成したユーザーの編集ページにGETリクエストを送信
-    get edit_user_url(user)
+    get edit_admin_user_url(user)
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -102,7 +102,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     # 作成したユーザーの詳細ページにGETリクエストを送信
     # user_urlメソッドを使用して、ユーザーの詳細ページのURLを取得
-    get user_url(user)
+    get admin_user_url(user)
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -117,7 +117,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # PATCHリクエストを送信してユーザー情報とユーザースキル情報を更新
     # assert_no_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が変わらないことを確認
     assert_no_difference("User.count") do
-      patch user_url(user), params: params
+      patch admin_user_url(user), params: params
     end
 
     # レスポンスがリダイレクトであることを確認
@@ -136,7 +136,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # PATCHリクエストを送信してユーザー情報を更新
     # assert_no_differenceメソッドを使用して、Userモデルのレコード数が変わらないことを確認
     assert_no_difference("User.count") do
-      patch user_url(user), params: { user: { full_name: "" } }
+      patch admin_user_url(user), params: { user: { full_name: "" } }
     end
 
     # レスポンスが422番であることを確認
@@ -155,7 +155,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # DELETEリクエストを送信してユーザーを削除
     # assert_differenceメソッドを使用して、Userモデルのレコード数が1減ることを確認
     assert_difference("User.count", -1) do
-      delete user_url(user)
+      delete admin_user_url(user)
     end
 
     # レスポンスがリダイレクトであることを確認
