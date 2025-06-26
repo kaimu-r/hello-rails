@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
+  resources :users, only: [:index, :show]
+
   namespace :admin do
     # ユーザーに関するルーティングを定義
     # 【resources 参考文献】https://api.rubyonrails.org/v8.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
