@@ -1,4 +1,4 @@
-class DepartmentsController < ApplicationController
+class Admin::DepartmentsController < ApplicationController
   # 部署一覧ページ
   def index
     @departments = Department.all
@@ -25,7 +25,7 @@ class DepartmentsController < ApplicationController
     @department = Department.new(department_params)
 
     if @department.save
-      redirect_to @department
+      redirect_to admin_department_url(@department)
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class DepartmentsController < ApplicationController
 
     # 部署の更新処理を行う
     if @department.update(department_params)
-      redirect_to @department
+      redirect_to admin_department_url(@department)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class DepartmentsController < ApplicationController
     @department = Department.find(params[:id])
     @department.destroy
 
-    redirect_to departments_path, status: :see_other
+    redirect_to admin_departments_path, status: :see_other
   end
 
   private

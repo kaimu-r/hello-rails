@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Admin::UsersController < ApplicationController
   # ユーザー一覧ページ
   def index
     @users = User.all
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     if @user.save
       # ユーザー詳細にリダイレクト
       # 【redirect_to 参考文献】https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
-      redirect_to @user
+      redirect_to admin_user_url(@user)
     else
       # ユーザー新規作成ページにリダイレクトしてエラーメッセージを表示
       # 【render 参考文献】https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     # ユーザーの更新処理を行う
     if @user.update(user_params)
       # ユーザー詳細ページにリダイレクト
-      redirect_to @user
+      redirect_to admin_user_url(@user)
     else
       # ユーザー編集ページにリダイレクトしてエラーメッセージを表示
       render :edit, status: :unprocessable_entity
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     # ユーザーの削除を実行
     @user.destroy
 
-    redirect_to users_path, status: :see_other
+    redirect_to admin_users_path, status: :see_other
   end
 
   private
