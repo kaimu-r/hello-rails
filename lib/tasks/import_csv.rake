@@ -16,17 +16,20 @@ namespace :users do
 
     puts "インポート スタート！"
     CSV.foreach(file_path, headers: true) do |row|
-      # 同じメールアドレスが登録されている場合はスキップ
-      if User.exists?(email: row["email"])
-        duplicated_num += 1
-        next
+
+      gender = if row["gender"] == "男"
+        :male
+      elsif row["gender"] == "女"
+        :female
+      else
+        :other
       end
 
       begin
         User.create!(
           full_name: row["full_name"],
           full_name_kana: row["full_name_kana"],
-          gender: row["gender"] == "男" ? :male : :female,
+          gender:,
           home_phone: row["home_phone"],
           mobile_phone: row["mobile_phone"],
           email: row["email"],
