@@ -9,7 +9,7 @@
             性別：<%= @user.gender.present? ? { male: "男", female: "女", other: "その他" }[@user.gender.to_sym] : "未登録" %>
         </li>
         <li>生年月日：<%= @user.birth_date&.strftime("%Y年%m月%d日") || "未登録" %></li>
-        <li>部署：<%= link_to @user.department.name, @user.department || "未登録" %></li>
+        <li>部署：<%= link_to @user.department.name, admin_department_path(@user.department) || "未登録" %></li>
     </ul>
 
     <h2>スキル</h2>
@@ -17,7 +17,7 @@
         <% if @skills.any? %>
             <% @skills.each do |skill| %>
                 <li>
-                <%= link_to skill.name, skill_path(skill) %>
+                <%= link_to skill.name, admin_skill_path(skill) %>
                 </li>
             <% end %>
         <% else %>
@@ -47,11 +47,11 @@
 <section>
     <h2>操作</h2>
     <ul>
-        <li><%= link_to "ユーザー名の編集", edit_user_path(@user) %></li>
-        <li><%= link_to "ユーザーを削除", user_path(@user), data: {
+        <li><%= link_to "ユーザー名の編集", edit_admin_user_path(@user) %></li>
+        <li><%= link_to "ユーザーを削除", admin_user_path(@user), data: {
             turbo_method: :delete,
             turbo_confirm: "本当に削除しますか？"
         } %></li>
-        <li><%= link_to "ユーザー一覧に戻る", users_path %></li>
+        <li><%= link_to "ユーザー一覧に戻る", admin_users_path %></li>
     </ul>
 </section>

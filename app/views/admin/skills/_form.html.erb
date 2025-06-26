@@ -1,4 +1,4 @@
-<%= form_with model: @skill do |form| %>
+<%= form_with model: [:admin, @skill] do |form| %>
   <div>
     <%= form.label :name, "スキル名" %>
     <%= form.text_field :name %>

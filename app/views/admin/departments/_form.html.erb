@@ -1,4 +1,4 @@
-<%= form_with model: @department do |form| %>
+<%= form_with model: [:admin, @department] do |form| %>
   <div>
     <%= form.label :name, "部署名" %>
     <%= form.text_field :name %>
