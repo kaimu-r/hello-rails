@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DepartmentsControllerTest < ActionDispatch::IntegrationTest
+class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   test "部署一覧ページの表示" do
     # 部署一覧ページにGETリクエストを送信
     get admin_departments_url

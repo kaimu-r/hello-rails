@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SkillsControllerTest < ActionDispatch::IntegrationTest
+class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   test "スキル一覧画面の表示" do
     # スキル一覧画面ページにGETリクエストを送信
     # admin_skills_urlメソッドを使用して、スキル一覧画面ページのURLを取得
