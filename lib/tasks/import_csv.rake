@@ -36,7 +36,7 @@ namespace :users do
           town: row["town"],
           address_block: row["address_block"],
           building: row["building"],
-          birth_date: Date.strptime(row["birth_date"], "%Y/%m/%d"),
+          birth_date: row["birth_date"],
           department_id: department_ids.sample
         )
         imported_num += 1
