@@ -1,4 +1,4 @@
-class Admin::DepartmentsController < Admin::BaseController
+class Admin::DepartmentsController < Admin::ApplicationController
   # 部署一覧ページ
   def index
     @departments = Department.all

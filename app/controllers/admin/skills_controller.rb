@@ -1,4 +1,4 @@
-class Admin::SkillsController < Admin::BaseController
+class Admin::SkillsController < Admin::ApplicationController
   # スキル一覧ページ
   def index
     @skills = Skill.all

@@ -1,4 +1,4 @@
-class Admin::UsersController < Admin::BaseController
+class Admin::UsersController < Admin::ApplicationController
   # ユーザー一覧ページ
   def index
     @users = User.all
