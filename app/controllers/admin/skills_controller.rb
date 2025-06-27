@@ -1,4 +1,4 @@
-class SkillsController < ApplicationController
+class Admin::SkillsController < Admin::ApplicationController
   # スキル一覧ページ
   def index
     @skills = Skill.all
@@ -25,7 +25,7 @@ class SkillsController < ApplicationController
     @skill = Skill.new(skill_params)
 
     if @skill.save
-      redirect_to @skill
+      redirect_to admin_skill_url(@skill)
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class SkillsController < ApplicationController
 
     # スキルの更新処理を行う
     if @skill.update(skill_params)
-      redirect_to @skill
+      redirect_to admin_skill_url(@skill)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class SkillsController < ApplicationController
     @skill = Skill.find(params[:id])
     @skill.destroy
 
-    redirect_to skills_path, status: :see_other
+    redirect_to admin_skills_path, status: :see_other
   end
 
   private

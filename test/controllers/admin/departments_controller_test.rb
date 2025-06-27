@@ -1,9 +1,9 @@
 require "test_helper"
 
-class DepartmentsControllerTest < ActionDispatch::IntegrationTest
+class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   test "部署一覧ページの表示" do
     # 部署一覧ページにGETリクエストを送信
-    get departments_url
+    get admin_departments_url
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -12,7 +12,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   test "部署の作成" do
     # POSTリクエスト送信後に部署が作成されたかどうかを確認する
     assert_difference("Department.count") do
-      post departments_url, params: { department: { name: "add_department" } }
+      post admin_departments_url, params: { department: { name: "add_department" } }
     end
 
     # レスポンスがリダイレクトであることを確認
@@ -22,7 +22,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   test "無効なパラメータで部署が作成できないこと" do
     # POSTリクエスト送信後に部署が作成されないことを確認する
     assert_no_difference("Department.count") do
-      post departments_url, params: { department: { name: "" } }
+      post admin_departments_url, params: { department: { name: "" } }
     end
 
     # レスポンスが422番であることを確認
@@ -31,7 +31,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "部署新規作成ページの表示" do
     # 部署新規作成ページにGETリクエストを送信
-    get new_department_url
+    get new_admin_department_url
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -42,7 +42,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     department = departments(:test_department)
 
     # 作成した部署の編集ページにGETリクエストを送信
-    get edit_department_url(department)
+    get edit_admin_department_url(department)
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -53,7 +53,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     department = departments(:test_department)
 
     # 作成した部署の詳細ページにGETリクエストを送信
-    get department_url(department)
+    get admin_department_url(department)
 
     # レスポンスが200番台であることを確認
     assert_response :success
@@ -66,7 +66,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     # PATCHリクエストを送信して部署情報を更新
     # assert_no_differenceメソッドを使用して、Departmentモデルのレコード数が変わらないことを確認
     assert_no_difference("Department.count") do
-      patch department_url(department), params: { department: { name: "updated_department" } }
+      patch admin_department_url(department), params: { department: { name: "updated_department" } }
     end
 
     # レスポンスがリダイレクトであることを確認
@@ -85,7 +85,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     # PATCHリクエストを送信して部署情報を更新
     # assert_no_differenceメソッドを使用して、Departmentモデルのレコード数が変わらないことを確認
     assert_no_difference("Department.count") do
-      patch department_url(department), params: { department: { name: "" } }
+      patch admin_department_url(department), params: { department: { name: "" } }
     end
 
     # レスポンスが422番であることを確認
@@ -104,7 +104,7 @@ class DepartmentsControllerTest < ActionDispatch::IntegrationTest
     # DELETEリクエストを送信して部署を削除
     # assert_differenceメソッドを使用して、Departmentモデルのレコード数が1減ることを確認
     assert_difference("Department.count", -1) do
-      delete department_url(department)
+      delete admin_department_url(department)
     end
 
     # レスポンスがリダイレクトであることを確認

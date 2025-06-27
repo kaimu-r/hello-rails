@@ -3,15 +3,19 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  # ユーザーに関するルーティングを定義
-  # 【resources 参考文献】https://api.rubyonrails.org/v8.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
-  resources :users
+  resources :users, only: [:index, :show]
 
-  # 部署に関するルーティングを定義
-  resources :departments
+  namespace :admin do
+    # ユーザーに関するルーティングを定義
+    # 【resources 参考文献】https://api.rubyonrails.org/v8.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
+    resources :users
 
-  # スキルに関するルーティングを定義
-  resources :skills
+    # 部署に関するルーティングを定義
+    resources :departments
+
+    # スキルに関するルーティングを定義
+    resources :skills
+  end
 
   # resourcesの代わりに個別でルーティングを定義する場合
   # get 'users', to: 'users#index'
