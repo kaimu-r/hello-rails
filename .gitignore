@@ -32,3 +32,6 @@
 
 db-data/*
 vendor/*
+
+# original
+/lib/data
