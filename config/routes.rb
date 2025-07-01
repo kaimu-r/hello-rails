@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
+  # 画像表示用のルーティングを定義
+  get "/images/:key", to: "images#show", as: "image"
+
   namespace :admin do
     # ユーザーに関するルーティングを定義
     # 【resources 参考文献】https://api.rubyonrails.org/v8.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
