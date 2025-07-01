@@ -23,6 +23,13 @@ class Admin::UsersController < Admin::ApplicationController
     @departments = Department.all
     @skills = Skill.all
 
+        # imageフィールドに新しい画像があるかチェック
+    if params[:user][:image].present?
+
+      # アップロードされたファイルをDBに保存してStorageファイルに格納する
+      upload_file = UploadFile.create_and_store(params[:user][:image])
+    end
+
     if @user.save
       # ユーザー詳細にリダイレクト
       # 【redirect_to 参考文献】https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
