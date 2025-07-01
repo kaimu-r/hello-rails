@@ -74,8 +74,7 @@ class Admin::UsersController < Admin::ApplicationController
     end
 
     # ユーザーの更新処理を行う
-    # ユーザーテーブルには`image`フィールドがないため更新前に削除する。
-    if @user.update(user_params.except(:image))
+    if @user.update(user_params)
       # ユーザー詳細ページにリダイレクト
       redirect_to admin_user_url(@user)
     else
@@ -105,7 +104,7 @@ class Admin::UsersController < Admin::ApplicationController
           :full_name, :full_name_kana, :gender, :birth_date,
           :email, :home_phone, :mobile_phone, :postal_code,
           :prefecture, :city, :town, :address_block, :building,
-          :department_id, :image, skill_ids: []
+          :department_id, skill_ids: []
         )
     end
 end
