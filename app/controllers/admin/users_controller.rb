@@ -28,6 +28,9 @@ class Admin::UsersController < Admin::ApplicationController
 
       # アップロードされたファイルをDBに保存してStorageファイルに格納する
       upload_file = UploadFile.create_and_store(params[:user][:image])
+
+      # 新しいファイルをuserインスタンスに入れる。
+      @user.upload_file = upload_file
     end
 
     if @user.save
