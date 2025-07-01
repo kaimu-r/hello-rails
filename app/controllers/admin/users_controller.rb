@@ -50,14 +50,20 @@ class Admin::UsersController < Admin::ApplicationController
 
     # imageフィールドに新しい画像があるかチェック
     if params[:user][:image].present?
-      upload = params[:user][:image]
 
-      # ファイルの
-      upload_file = UploadFile.create_and_store(upload)
+      # アップロードされたファイルをDBに保存してStorageファイルに格納する
+      upload_file = UploadFile.create_and_store(params[:user][:image])
 
-      # 古いアップロードファイルを削除する
-      @user.upload_file&.destroy
+      # 古いファイルデータのインスタンスを取得
+      # ユーザーテーブルに新しいupload_file_idが設定された後に、old_fileを削除するために取り出している。
+      old_file = @user.upload_file
+
+      # 新しいファイルに差し替えて保存する
       @user.upload_file = upload_file
+      @user.save!
+
+      # 古いファイルデータを削除する
+      old_file&.destroy 
     end
 
     # ユーザーの更新処理を行う
