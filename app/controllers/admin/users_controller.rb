@@ -48,8 +48,21 @@ class Admin::UsersController < Admin::ApplicationController
     @departments = Department.all
     @skills = Skill.all
 
+    # imageフィールドに新しい画像があるかチェック
+    if params[:user][:image].present?
+      upload = params[:user][:image]
+
+      # ファイルの
+      upload_file = UploadFile.create_and_store(upload)
+
+      # 古いアップロードファイルを削除する
+      @user.upload_file&.destroy
+      @user.upload_file = upload_file
+    end
+
     # ユーザーの更新処理を行う
-    if @user.update(user_params)
+    # ユーザーテーブルには`image`フィールドがないため更新前に削除する。
+    if @user.update(user_params.except(:image))
       # ユーザー詳細ページにリダイレクト
       redirect_to admin_user_url(@user)
     else
@@ -79,7 +92,7 @@ class Admin::UsersController < Admin::ApplicationController
           :full_name, :full_name_kana, :gender, :birth_date,
           :email, :home_phone, :mobile_phone, :postal_code,
           :prefecture, :city, :town, :address_block, :building,
-          :department_id, skill_ids: []
+          :department_id, :image, skill_ids: []
         )
     end
 end
