@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_06_20_071927) do
+ActiveRecord::Schema[7.0].define(version: 2025_06_30_052837) do
   create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -21,6 +21,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_20_071927) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "upload_files", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type", null: false
+    t.bigint "byte_size", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_upload_files_on_key", unique: true
   end
 
   create_table "user_skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -49,10 +59,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_20_071927) do
     t.string "building"
     t.date "birth_date"
     t.bigint "department_id"
+    t.bigint "upload_file_id"
     t.index ["department_id"], name: "index_users_on_department_id"
+    t.index ["upload_file_id"], name: "index_users_on_upload_file_id"
   end
 
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "departments"
+  add_foreign_key "users", "upload_files"
 end
