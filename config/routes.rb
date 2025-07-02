@@ -3,10 +3,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  resources :users, only: [:index, :show]
-
-  # 画像表示用のルーティングを定義
-  get "/images/:key", to: "images#show", as: "image"
+  # 一般ユーザーのルーティングを定義
+  resources :users, only: [:index, :show] do
+    # ユーザーの画像表示用のルーティング（管理画面でも使用）
+    get "image", on: :member
+  end
 
   namespace :admin do
     # ユーザーに関するルーティングを定義
