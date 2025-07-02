@@ -2,9 +2,6 @@ class User < ApplicationRecord
     # ユーザーは1つの部署に所属する
     belongs_to :department
 
-    # ユーザーは1つの画像を所持または未所持
-    belongs_to :upload_file
-
     # ユーザーはUserSkillsモデルを経由して複数のスキルを所有する
     has_many :user_skills
     has_many :skills, through: :user_skills
@@ -62,4 +59,22 @@ class User < ApplicationRecord
 
     validates :building,
               length: { maximum: 50, message: "は50文字以内で入力してください" } # 最大文字数は50
+    
+    validates :image_base64,
+              length: { maximum: 2.megabytes }, # base64エンコードしたデータは2MG以下
+              allow_blank: true # 画像はNULL許容
+
+    validate :validate_image
+
+    def validate_image
+        # 画像が2MB以上は許可しない
+        unless image_base64.present? && image_base64.length > 2.megabytes
+            errors.add(:image, "は2MB以内にしてください")
+        end
+
+        # MIMEタイプで許可するファイルを制御
+        unless image_content_type.present? && ["image/png", "image/jpeg", "image/jpg"].include?(image_content_type)
+            errors.add(:image, "はPNG, JPEG, JPGだけアップロードできます")
+        end
+    end
 end

@@ -23,14 +23,16 @@ class Admin::UsersController < Admin::ApplicationController
     @departments = Department.all
     @skills = Skill.all
 
-        # imageフィールドに新しい画像があるかチェック
-    if params[:user][:image].present?
+    # 画像のアップロードがある場合に処理を行う
+    if params[:user][:image].presence
+      # ActionDispatch::Http::UploadedFile
+      uploaded_file = params[:user][:image]
 
-      # アップロードされたファイルをDBに保存してStorageファイルに格納する
-      upload_file = UploadFile.create_and_store(params[:user][:image])
+      # テンポラリファイルを作成し、Base64エンコードを実施する
+      @user.image_base64 = Base64.strict_encode64(uploaded_file.read)
 
-      # 新しいファイルをuserインスタンスに入れる。
-      @user.upload_file = upload_file
+      # ファイルのMIMEタイプを設定する
+      @user.image_content_type = uploaded_file.content_type
     end
 
     if @user.save
@@ -58,22 +60,16 @@ class Admin::UsersController < Admin::ApplicationController
     @departments = Department.all
     @skills = Skill.all
 
-    # imageフィールドに新しい画像があるかチェック
-    if params[:user][:image].present?
+    # 画像のアップロードがある場合に処理を行う
+    if params[:user][:image].presence
+      # ActionDispatch::Http::UploadedFile
+      uploaded_file = params[:user][:image]
 
-      # アップロードされたファイルをDBに保存してStorageファイルに格納する
-      upload_file = UploadFile.create_and_store(params[:user][:image])
+      # テンポラリファイルを作成し、Base64エンコードを実施する
+      @user.image_base64 = Base64.strict_encode64(uploaded_file.read)
 
-      # 古いファイルデータのインスタンスを取得
-      # ユーザーテーブルに新しいupload_file_idが設定された後に、old_fileを削除するために取り出している。
-      old_file = @user.upload_file
-
-      # 新しいファイルに差し替えて保存する
-      @user.upload_file = upload_file
-      @user.save!
-
-      # 古いファイルデータを削除する
-      old_file&.destroy 
+      # ファイルのMIMEタイプを設定する
+      @user.image_content_type = uploaded_file.content_type
     end
 
     # ユーザーの更新処理を行う
