@@ -23,18 +23,6 @@ class Admin::UsersController < Admin::ApplicationController
     @departments = Department.all
     @skills = Skill.all
 
-    # 画像のアップロードがある場合に処理を行う
-    if params[:user][:image].presence
-      # ActionDispatch::Http::UploadedFile
-      uploaded_file = params[:user][:image]
-
-      # テンポラリファイルを作成し、Base64エンコードを実施する
-      @user.image_base64 = Base64.strict_encode64(uploaded_file.read)
-
-      # ファイルのMIMEタイプを設定する
-      @user.image_content_type = uploaded_file.content_type
-    end
-
     if @user.save
       # ユーザー詳細にリダイレクト
       # 【redirect_to 参考文献】https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
@@ -59,18 +47,6 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
     @departments = Department.all
     @skills = Skill.all
-
-    # 画像のアップロードがある場合に処理を行う
-    if params[:user][:image].presence
-      # ActionDispatch::Http::UploadedFile
-      uploaded_file = params[:user][:image]
-
-      # テンポラリファイルを作成し、Base64エンコードを実施する
-      @user.image_base64 = Base64.strict_encode64(uploaded_file.read)
-
-      # ファイルのMIMEタイプを設定する
-      @user.image_content_type = uploaded_file.content_type
-    end
 
     # ユーザーの更新処理を行う
     if @user.update(user_params)
@@ -103,7 +79,7 @@ class Admin::UsersController < Admin::ApplicationController
           :full_name, :full_name_kana, :gender, :birth_date,
           :email, :home_phone, :mobile_phone, :postal_code,
           :prefecture, :city, :town, :address_block, :building,
-          :department_id, skill_ids: []
+          :department_id, :image, skill_ids: []
         )
     end
 end
