@@ -19,7 +19,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
         building: "",
         birth_date: "2020-06-17",
         department_id: departments(:test_department).id,
-        skill_ids: ["1"]
+        skill_ids: ["1"],
+        image: fixture_file_upload(Rails.root.join("test/fixtures/files/test.png"), "image/png")
       }
     }
   end
@@ -42,7 +43,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
         building: "",
         birth_date: "2020-06-17",
         department_id: departments(:test_department).id,
-        skill_ids: ["2"]
+        skill_ids: ["2"],
       }
     }
   end
@@ -56,14 +57,16 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "POST /users でユーザーとユーザースキルが1件ずつ増える" do
-    # parameterを定義
-    params = valid_create_params
+  test "POST /users でユーザーとユーザースキルが1件ずつ増える + 画像を作成できる" do
     # POSTリクエスト送信後にユーザーとユーザースキルが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が1増えることを確認
     assert_difference(["User.count", "UserSkill.count"]) do
-      post admin_users_url, params: params
+      post admin_users_url, params: valid_create_params
     end
+    # Userカラムに画像データが入っていることを確認
+    user = User.order(:created_at).last
+    assert_not_nil user.image
+
     # レスポンスがリダイレクトであることを確認
     assert_response :redirect
   end
@@ -73,6 +76,34 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference("User.count") do
       post admin_users_url, params: { user: { full_name: "" } }
     end
+    # レスポンスが422番であることを確認
+    assert_response :unprocessable_entity
+  end
+
+  test "POST /users で不正なMIMEタイプのファイルの場合はユーザーが作成されない" do
+    # MIMEタイプが"text/plain"のファイルをPOSTリクエストで送信する
+    params = valid_create_params
+    params[:user][:image] = fixture_file_upload(Rails.root.join("test/fixtures/files/invalid_type.txt"), "text/plain")
+
+    # POSTリクエスト送信後にユーザーが作成されないことを確認
+    assert_no_difference("User.count") do
+      post admin_users_url, params: params
+    end
+
+    # レスポンスが422番であることを確認
+    assert_response :unprocessable_entity
+  end
+
+  test "POST /users でファイルサイズが64KB以上のファイルをアップロードした場合はユーザーが作成されない" do
+    # MIMEタイプが"text/plain"のファイルをPOSTリクエストで送信する
+    params = valid_create_params
+    params[:user][:image] = fixture_file_upload(Rails.root.join("test/fixtures/files/too_big.png"), "image/png")
+
+    # POSTリクエスト送信後にユーザーが作成されないことを確認
+    assert_no_difference("User.count") do
+      post admin_users_url, params: params
+    end
+
     # レスポンスが422番であることを確認
     assert_response :unprocessable_entity
   end
