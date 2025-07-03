@@ -79,7 +79,7 @@ class Admin::UsersController < Admin::ApplicationController
           :full_name, :full_name_kana, :gender, :birth_date,
           :email, :home_phone, :mobile_phone, :postal_code,
           :prefecture, :city, :town, :address_block, :building,
-          :department_id, skill_ids: []
+          :department_id, :image, skill_ids: []
         )
     end
 end

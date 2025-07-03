@@ -35,3 +35,4 @@ vendor/*
 
 # original
 /lib/data
+/test/fixtures/files

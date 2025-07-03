@@ -59,4 +59,42 @@ class User < ApplicationRecord
 
     validates :building,
               length: { maximum: 50, message: "は50文字以内で入力してください" } # 最大文字数は50
+    
+    # imageフィールドのバリデーションチェック
+    validate :image_validate
+
+    # バリデーション実行後の処理
+
+    # imageフィールドをバイナリデータに変換する
+    after_validation :extract_image_binary
+
+
+    private
+
+      # imageフィールドがActionDispatch::Http::UploadedFileクラスまたはそのサブクラスでない場合は何もしない
+      # imageフィールドにはバイナリデータが渡る場合もある（ファイルをフィールドに入れずにリクエストを送信した場合）ためクラスを指定する
+      def image_uploaded_file?
+        image.is_a?(ActionDispatch::Http::UploadedFile)
+      end
+
+      def image_validate
+        return unless image_uploaded_file?
+
+        # 画像のファイルサイズが64KB以下かどうかをチェックする
+        if image.size > 64.kilobytes
+          errors.add(:image, "は64KB以下にしてください")
+        end
+
+        # MIMEタイプがimage/pngのみアップロード可能にする
+        unless image.content_type.match("image/png")
+          errors.add(:image, 'はPNG形式のみアップロードできます')
+        end
+      end
+
+      # 画像データをバイナリデータに変換する処理
+      def extract_image_binary
+        return unless image_uploaded_file?
+        # 画像の読み込みを行いバイナリデータを格納する
+        self.image = self.image.read
+      end
 end
