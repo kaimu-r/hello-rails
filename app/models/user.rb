@@ -60,21 +60,41 @@ class User < ApplicationRecord
     validates :building,
               length: { maximum: 50, message: "は50文字以内で入力してください" } # 最大文字数は50
     
-    validates :image_base64,
-              length: { maximum: 2.megabytes }, # base64エンコードしたデータは2MG以下
-              allow_blank: true # 画像はNULL許容
+    # imageフィールドのバリデーションチェック
+    validate :image_validate
 
-    validate :validate_image
+    # バリデーション実行後の処理
 
-    def validate_image
-        # 画像が2MB以上は許可しない
-        unless image_base64.present? && image_base64.length > 2.megabytes
-            errors.add(:image, "は2MB以内にしてください")
+    # imageフィールドをバイナリデータに変換する
+    after_validation :extract_image_binary
+
+
+    private
+
+      # imageフィールドがActionDispatch::Http::UploadedFileクラスまたはそのサブクラスでない場合は何もしない
+      # imageフィールドにはバイナリデータが渡る場合もある（ファイルをフィールドに入れずにリクエストを送信した場合）ためクラスを指定する
+      def image_uploaded_file?
+        image.is_a?(ActionDispatch::Http::UploadedFile)
+      end
+
+      def image_validate
+        return unless image_uploaded_file?
+
+        # 画像のファイルサイズが2MB以下かどうかをチェックする
+        if image.size > 2.megabytes
+          erros.add(:image, "は2MB以下にしてください")
         end
 
-        # MIMEタイプで許可するファイルを制御
-        unless image_content_type.present? && ["image/png", "image/jpeg", "image/jpg"].include?(image_content_type)
-            errors.add(:image, "はPNG, JPEG, JPGだけアップロードできます")
+        # MIMEタイプがimage/pngのみアップロード可能にする
+        unless image.content_type.match("image/png")
+          errors.add(:image, 'はPNG形式のみアップロードできます')
         end
-    end
+      end
+
+      # 画像データをバイナリデータに変換する処理
+      def extract_image_binary
+        return unless image_uploaded_file?
+        # 画像の読み込みを行いバイナリデータを格納する
+        self.image = self.image.read
+      end
 end
