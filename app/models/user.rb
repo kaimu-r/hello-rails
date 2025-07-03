@@ -80,9 +80,9 @@ class User < ApplicationRecord
       def image_validate
         return unless image_uploaded_file?
 
-        # 画像のファイルサイズが2MB以下かどうかをチェックする
-        if image.size > 2.megabytes
-          erros.add(:image, "は2MB以下にしてください")
+        # 画像のファイルサイズが64KB以下かどうかをチェックする
+        if image.size > 64.kilobytes
+          errors.add(:image, "は64KB以下にしてください")
         end
 
         # MIMEタイプがimage/pngのみアップロード可能にする
