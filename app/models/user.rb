@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     # ユーザー一覧ページでユーザーを20人ずつ表示する
-    max_paginates_per 20
+    paginates_per 20
 
     # ユーザーは1つの部署に所属する
     belongs_to :department
