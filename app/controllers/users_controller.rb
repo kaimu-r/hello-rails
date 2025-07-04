@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # ユーザー一覧ページ
   def index
-    @users = User.all
+    @users = User.order(:full_name).page params[:page]
   end
 
   # ユーザー詳細ページ
