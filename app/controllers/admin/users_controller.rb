@@ -1,7 +1,31 @@
 class Admin::UsersController < Admin::ApplicationController
   # ユーザー一覧ページ
   def index
-    @users = User.order(:full_name).page params[:page]
+    @users = User.all
+    @prefectures = User.prefectures
+
+    # 名前検索がある場合
+    unless params[:name].blank?
+      @users = @users.search_by_full_name(params[:name])
+    end
+
+    # 都道府県検索がある場合
+    unless params[:pref].blank?
+      @users = @users.search_by_prefecture(params[:pref])
+    end
+
+    # 誕生日検索がある場合
+    unless params[:birth].blank?
+      @users = @users.order_by_birth_date(params[:birth])
+    end
+
+    @users = @users.order(:full_name).page(params[:page])
+
+    # 表示件数の指定がある場合
+    unless params[:per].blank?
+      @users = @users.per(params[:per])
+    end
+
   end
 
   # ユーザー詳細ページ
