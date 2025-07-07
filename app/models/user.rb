@@ -84,6 +84,20 @@ class User < ApplicationRecord
     # imageフィールドをバイナリデータに変換する
     after_validation :extract_image_binary
 
+    # ユーザー名で検索
+    def self.search_by_full_name(full_name)
+      where("full_name LIKE ?", "%#{full_name}%")
+    end
+
+    # 都道府県で検索
+    def self.search_by_prefecture(prefecture)
+      where("prefecture = ?", prefecture)
+    end
+
+    # 誕生日順でソート
+    def self.order_by_birth_date(dir)
+      order(birth_date: dir)
+    end
 
     private
 
