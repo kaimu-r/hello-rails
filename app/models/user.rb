@@ -84,20 +84,14 @@ class User < ApplicationRecord
     # imageフィールドをバイナリデータに変換する
     after_validation :extract_image_binary
 
-    # ユーザー名で検索
-    def self.search_by_full_name(full_name)
-      where("full_name LIKE ?", "%#{full_name}%")
-    end
+    # 検索用のクエリを発行するメソッドを作成する
+    # scopeメソッドを使用してActiveRecord::Relationオブジェクトを返しクエリの構築を行う
+    scope :search_by_full_name, ->(full_name) { where("full_name LIKE ?", "%#{full_name}%") }
 
-    # 都道府県で検索
-    def self.search_by_prefecture(prefecture)
-      where("prefecture = ?", prefecture)
-    end
+    scope :search_by_prefecture, ->(prefecture) { where("prefecture = ?", prefecture) }
 
-    # 誕生日順でソート
-    def self.order_by_birth_date(dir)
-      order(birth_date: dir)
-    end
+    # order_typeには`asc`または`desc`が入る
+    scope :order_by_birth_date, ->(order_type) { order(birth_date: order_type) }
 
     private
 
