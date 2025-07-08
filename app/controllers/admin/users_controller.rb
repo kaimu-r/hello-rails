@@ -4,28 +4,17 @@ class Admin::UsersController < Admin::ApplicationController
     @users = User.all
     @prefectures = User.prefectures
 
-    # 名前検索がある場合
-    unless params[:name].blank?
-      @users = @users.search_by_full_name(params[:name])
-    end
+    # 検索フォームから検索条件のクエリパラメータを取得し、検索を行っていく処理
+    @users = @users.search_by_full_name(params[:name]) if params[:name].present?
 
-    # 都道府県検索がある場合
-    unless params[:pref].blank?
-      @users = @users.search_by_prefecture(params[:pref])
-    end
+    @users = @users.search_by_prefecture(params[:pref]) if @prefectures.value?(params[:pref])
 
-    # 誕生日検索がある場合
-    unless params[:birth].blank?
-      @users = @users.order_by_birth_date(params[:birth])
-    end
+    @users = @users.order_by_birth_date(params[:birth]) if ["asc", "desc"].include?(params[:birth])
 
+    # kaminariのページネーションを追加して、表示件数の制御を行う
     @users = @users.order(:full_name).page(params[:page])
 
-    # 表示件数の指定がある場合
-    unless params[:per].blank?
-      @users = @users.per(params[:per])
-    end
-
+    @users = @users.per(params[:per]) if ["10", "50", "100"].include?(params[:per])
   end
 
   # ユーザー詳細ページ
