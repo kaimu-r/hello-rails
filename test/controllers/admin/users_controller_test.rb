@@ -95,6 +95,39 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not_select "li", takeo.full_name
   end
 
+  test "GET /users?birth=asc で誕生日が古→新に並ぶ" do
+    # フィクスチャ: hana(一番古い) -> shigeo -> takeo(一番新しい)
+    shigeo = users(:shigeo) # 1924-02-27
+    hana = users(:hana) # 1924-01-17
+    takeo = users(:takeo) # 1925-01-13
+
+    get admin_users_url, params: { birth: "asc" }
+    assert_response :success
+
+    # response => ActionDispatch::TestResponse
+    body = response.parsed_body
+
+    # 各名前の出現位置（インデックス）を比較して順序を確認
+    idx_shigeo = body.index(shigeo.full_name)
+    idx_hana = body.index(hana.full_name)
+    idx_takeo = body.index(takeo.full_name)
+
+    assert idx_hana < idx_shigeo && idx_shigeo < idx_takeo
+  end
+
+  test "GET /users?per=10 で ユーザーが10件だけ描画される" do
+    # 表示させる用のユーザーを11人作成
+    11.times do |i|
+      # バリデーションをスキップして保存したいのでsaveメソッドで
+      User.new(full_name: "テスト#{i}").save(validate: false)
+    end
+
+    get admin_users_url, params: { per: "10" }
+    assert_response :success
+  
+    assert_select "li", count: 10
+  end
+
   test "POST /users でユーザーとユーザースキルが1件ずつ増える + 画像を作成できる" do
     # POSTリクエスト送信後にユーザーとユーザースキルが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が1増えることを確認
