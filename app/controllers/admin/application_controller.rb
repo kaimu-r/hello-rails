@@ -8,7 +8,7 @@ class Admin::ApplicationController < ActionController::Base
     end
 
     # ログインユーザーが存在しない場合はログイン画面にリダイレクトする
-    def login_check
-      redirect_to new_admin_login_path unless current_admin
+    def require_login
+      redirect_to new_admin_login_url unless current_admin
     end
 end

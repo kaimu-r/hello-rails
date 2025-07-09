@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
-  before_action :login_check
+  before_action :require_login
 
   # ユーザー一覧ページ
   def index

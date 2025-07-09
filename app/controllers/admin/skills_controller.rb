@@ -1,5 +1,5 @@
 class Admin::SkillsController < Admin::ApplicationController
-  before_action :login_check
+  before_action :require_login
 
   # スキル一覧ページ
   def index

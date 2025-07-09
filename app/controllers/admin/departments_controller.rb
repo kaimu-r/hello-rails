@@ -1,5 +1,5 @@
 class Admin::DepartmentsController < Admin::ApplicationController
-  before_action :login_check
+  before_action :require_login
 
   # 部署一覧ページ
   def index
