@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
     # スキルに関するルーティングを定義
     resources :skills
+
+    # ログイン処理に関するルーティングを定義
+    resources :logins, only: [:new, :create, :destroy]
   end
 
   # resourcesの代わりに個別でルーティングを定義する場合
