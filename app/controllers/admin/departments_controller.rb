@@ -1,4 +1,6 @@
 class Admin::DepartmentsController < Admin::ApplicationController
+  before_action :login_check
+
   # 部署一覧ページ
   def index
     @departments = Department.all

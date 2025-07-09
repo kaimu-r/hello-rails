@@ -1,4 +1,6 @@
 class Admin::SkillsController < Admin::ApplicationController
+  before_action :login_check
+
   # スキル一覧ページ
   def index
     @skills = Skill.all

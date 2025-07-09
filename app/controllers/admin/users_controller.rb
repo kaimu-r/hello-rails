@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::ApplicationController
+  before_action :login_check
+
   # ユーザー一覧ページ
   def index
     @users = User.order(:full_name).page params[:page]
