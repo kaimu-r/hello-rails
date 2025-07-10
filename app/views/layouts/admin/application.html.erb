@@ -12,7 +12,11 @@
 
   <body>
     <header>
-        ここは管理画面です
+      ここは管理画面です
+      <% if logged_in? %>
+        ようこそ <%= current_user.email %> さん
+        <%= button_to "ログアウト", admin_login_path, method: :delete %>
+      <% end %>
     </header>
     <%= yield %>
   </body>
