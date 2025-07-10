@@ -1,14 +1,22 @@
 class Admin::ApplicationController < ActionController::Base
   layout 'admin/application'
 
+  before_action :require_login
+  helper_method :current_user, :logged_in?
+
   private
-    # ログイン中のユーザーを取得する。
-    def current_admin
-      @_current_admin ||= Admin.find_by(id: session[:admin_id]) if session[:admin_id]
+    def current_user
+      @current_user ||= Admin.find_by(id: session[:admin_id])
+    end
+
+    def logged_in?
+      current_user != nil
     end
 
     # ログインユーザーが存在しない場合はログイン画面にリダイレクトする
     def require_login
-      redirect_to new_admin_login_url unless current_admin
+      if !logged_in?
+        redirect_to new_admin_login_path
+      end
     end
 end
