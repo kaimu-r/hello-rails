@@ -1,0 +1,10 @@
+<h1>ログイン</h1>
+
+<%= form_with url: admin_login_path, method: :post do |form| %>
+  <div>
+    <%= form.label :email, "メールアドレス" %><br>
+    <%= form.email_field :email %>
+  </div>
+
+  <%= form.submit "ログイン" %>
+<% end %>
