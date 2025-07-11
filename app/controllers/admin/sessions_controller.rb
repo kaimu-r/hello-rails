@@ -9,6 +9,7 @@ class Admin::SessionsController < Admin::ApplicationController
     admin = Admin.find_by(email: params[:email])
 
     if admin
+      reset_session
       session[:admin_id] = admin.id
       redirect_to admin_users_url
     else
