@@ -2,15 +2,15 @@ class Admin::ApplicationController < ActionController::Base
   layout 'admin/application'
 
   before_action :require_login
-  helper_method :current_user, :logged_in?
+  helper_method :current_admin_user, :logged_in?
 
   private
-    def current_user
-      @current_user ||= Admin.find_by(id: session[:admin_id])
+    def current_admin_user
+      @current_admin_user ||= AdminUser.find_by(id: session[:admin_user_id])
     end
 
     def logged_in?
-      current_user != nil
+      current_admin_user != nil
     end
 
     # ログインユーザーが存在しない場合はログイン画面にリダイレクトする

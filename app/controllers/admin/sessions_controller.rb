@@ -6,11 +6,11 @@ class Admin::SessionsController < Admin::ApplicationController
 
   def create
     # メールアドレスで本人確認を行い、ログイン状態にする
-    admin = Admin.find_by(email: params[:email])
+    admin_user = AdminUser.find_by(email: params[:email])
 
-    if admin
+    if admin_user
       reset_session
-      session[:admin_id] = admin.id
+      session[:admin_user_id] = admin_user.id
       redirect_to admin_users_url
     else
       render :new, status: :unprocessable_entity
