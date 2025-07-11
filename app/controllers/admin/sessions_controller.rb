@@ -19,7 +19,7 @@ class Admin::SessionsController < Admin::ApplicationController
 
   def destroy
     # ログアウトの処理
-    session.delete(:admin_id)
+    session.delete(:admin_user_id)
 
     redirect_to new_admin_login_url
   end
