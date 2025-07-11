@@ -21,7 +21,6 @@ class Admin::SessionsController < Admin::ApplicationController
     # ログアウトの処理
     session.delete(:admin_id)
 
-    @_current_user = nil
     redirect_to new_admin_login_url
   end
 end
