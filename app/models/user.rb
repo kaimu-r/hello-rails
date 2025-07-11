@@ -9,6 +9,22 @@ class User < ApplicationRecord
     # ユーザーの性別
     enum :gender, { male: 0, female: 1, other: 2 }
 
+    # 都道府県のENUM
+    enum :prefecture, {
+      hokkaido: "北海道", aomori: "青森県", iwate: "岩手県", miyagi: "宮城県",
+      akita: "秋田県", yamagata: "山形県", fukushima: "福島県", ibaraki: "茨城県",
+      tochigi: "栃木県", gunma: "群馬県", saitama: "埼玉県", chiba: "千葉県",
+      tokyo: "東京都", kanagawa: "神奈川県", niigata: "新潟県", toyama: "富山県",
+      ishikawa: "石川県", fukui: "福井県", yamanashi: "山梨県", nagano: "長野県",
+      gifu: "岐阜県", shizuoka: "静岡県", aichi: "愛知県", mie: "三重県",
+      shiga: "滋賀県", kyoto: "京都府", osaka: "大阪府", hyogo: "兵庫県",
+      nara: "奈良県", wakayama: "和歌山県", tottori: "鳥取県", shimane: "島根県",
+      okayama: "岡山県", hiroshima: "広島県", yamaguchi: "山口県", tokushima:"徳島県",
+      kagawa: "香川県", ehime: "愛媛県", kochi: "高知県", fukuoka: "福岡県",
+      saga: "佐賀県", nagasaki: "長崎県", kumamoto: "熊本県", oita: "大分県",
+      miyazaki: "宮崎県", kagoshima: "鹿児島県", okinawa: "沖縄県"
+    }
+
     validates :full_name,
               presence: { message: "を入力してください" }, # full_nameは必須
               length: { maximum: 50 } # full_nameの最大文字数は50
@@ -68,6 +84,14 @@ class User < ApplicationRecord
     # imageフィールドをバイナリデータに変換する
     after_validation :extract_image_binary
 
+    # 検索用のクエリを発行するメソッドを作成する
+    # scopeメソッドを使用してActiveRecord::Relationオブジェクトを返しクエリの構築を行う
+    scope :search_by_full_name, ->(full_name) { where("full_name LIKE ?", "%" + full_name + "%") }
+
+    scope :search_by_prefecture, ->(prefecture) { where("prefecture = ?", prefecture) }
+
+    # order_typeには`asc`または`desc`が入る
+    scope :order_by_birth_date, ->(order_type) { order(birth_date: order_type) }
 
     private
 
