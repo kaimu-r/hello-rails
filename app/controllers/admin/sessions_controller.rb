@@ -6,7 +6,7 @@ class Admin::SessionsController < Admin::ApplicationController
 
   def create
     # メールアドレスで本人確認を行い、ログイン状態にする
-    admin_user = AdminUser.find_by(email: params[:email])
+    admin_user = AdminUser.find_by(email: params[:email])&.authenticate(params[:password])
 
     if admin_user
       reset_session
