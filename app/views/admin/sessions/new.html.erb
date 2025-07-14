@@ -2,8 +2,11 @@
 
 <%= form_with url: admin_login_path, method: :post do |form| %>
   <div>
-    <%= form.label :email, "メールアドレス" %><br>
+    <%= form.label :email, "メールアドレス" %>
     <%= form.email_field :email %>
+
+    <%= form.label :password, "パスワード" %>
+    <%= form.password_field :password %>
   </div>
 
   <%= form.submit "ログイン" %>
