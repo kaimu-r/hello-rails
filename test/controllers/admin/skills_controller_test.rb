@@ -1,7 +1,13 @@
 require "test_helper"
 
 class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
-  test "スキル一覧画面の表示" do
+  setup do
+    @admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    @params = { email: @admin_user.email, password: "12345678" }
+  end
+
+  test "#index スキル一覧画面の表示" do
+    login(@params)
     # スキル一覧画面ページにGETリクエストを送信
     # admin_skills_urlメソッドを使用して、スキル一覧画面ページのURLを取得
     get admin_skills_url
@@ -10,45 +16,13 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "スキルの作成" do
-    # POSTリクエスト送信後にスキルが作成されたかどうかを確認する
-    # assert_differenceメソッドを使用して、skillモデルのレコード数が1増えることを確認
-    assert_difference("Skill.count") do
-      post admin_skills_url, params: { skill: { name: "create_skill" } }
-    end
-    # レスポンスがリダイレクトであることを確認
-    assert_response :redirect
+  test "#index 未ログイン時にはスキル一覧画面にアクセスできない" do
+    get admin_skills_url
+    assert_response :found
   end
 
-  test "無効なパラメータでスキルを作成できないこと" do
-    # POSTリクエスト送信後にスキルが作成されないことを確認
-    assert_no_difference("Skill.count") do
-      post admin_skills_url, params: { skill: { name: "" } }
-    end
-    # レスポンスが422番であることを確認
-    assert_response :unprocessable_entity
-  end
-
-  test "スキル新規作成ページの表示" do
-    # スキル新規作成ページにGETリクエストを送信
-    get new_admin_skill_url
-
-    # レスポンスが200番台であることを確認
-    assert_response :success
-  end
-
-  test "スキル編集ページの表示" do
-    # skillsメソッドを使用して、テスト用のスキルを取得
-    skill = skills(:test_skill)
-
-    # 作成したスキルの編集ページにGETリクエストを送信
-    get edit_admin_skill_url(skill)
-
-    # レスポンスが200番台であることを確認
-    assert_response :success
-  end
-
-  test "スキル詳細ページの表示" do
+  test "#show スキル詳細ページの表示" do
+    login(@params)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -60,7 +34,50 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "スキル情報の更新" do
+  test "#new スキル新規作成ページの表示" do
+    login(@params)
+    # スキル新規作成ページにGETリクエストを送信
+    get new_admin_skill_url
+
+    # レスポンスが200番台であることを確認
+    assert_response :success
+  end
+
+  test "#edit スキル編集ページの表示" do
+    login(@params)
+    # skillsメソッドを使用して、テスト用のスキルを取得
+    skill = skills(:test_skill)
+
+    # 作成したスキルの編集ページにGETリクエストを送信
+    get edit_admin_skill_url(skill)
+
+    # レスポンスが200番台であることを確認
+    assert_response :success
+  end
+
+  test "#create スキルの作成" do
+    login(@params)
+    # POSTリクエスト送信後にスキルが作成されたかどうかを確認する
+    # assert_differenceメソッドを使用して、skillモデルのレコード数が1増えることを確認
+    assert_difference("Skill.count") do
+      post admin_skills_url, params: { skill: { name: "create_skill" } }
+    end
+    # レスポンスがリダイレクトであることを確認
+    assert_response :redirect
+  end
+
+  test "#create 無効なパラメータでスキルを作成できないこと" do
+    login(@params)
+    # POSTリクエスト送信後にスキルが作成されないことを確認
+    assert_no_difference("Skill.count") do
+      post admin_skills_url, params: { skill: { name: "" } }
+    end
+    # レスポンスが422番であることを確認
+    assert_response :unprocessable_entity
+  end
+
+  test "#update スキル情報の更新" do
+    login(@params)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -79,7 +96,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "updated_skill", skill.name
   end
 
-  test "無効なパラメータでスキルを更新できないこと" do
+  test "#update 無効なパラメータでスキルを更新できないこと" do
+    login(@params)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -98,7 +116,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "test_skill", skill.name
   end
 
-  test "スキルの削除" do
+  test "#destroy スキルの削除" do
+    login(@params)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
