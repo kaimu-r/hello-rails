@@ -6,5 +6,7 @@
     <%= form.email_field :email %>
   </div>
 
+  <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+
   <%= form.submit "ログイン" %>
 <% end %>
