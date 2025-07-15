@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     resource :login, only: [:new, :create, :destroy], controller: "sessions"
   end
 
+  ## OAuth 専用ルーティング
+  get "auth/google_oauth2/callback", to: "auth_callbacks#google_oauth2"
+
   # resourcesの代わりに個別でルーティングを定義する場合
   # get 'users', to: 'users#index'
   # post 'users/create', to: 'users#create'
