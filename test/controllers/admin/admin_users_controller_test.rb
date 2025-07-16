@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
+class Admin::AdminUsersControllerTest < ActionDispatch::IntegrationTest
   test "#new 新規登録ページにアクセスできる" do
     get new_admin_login_url
     assert_response :success
