@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
     # ログイン処理に関するルーティングを定義
     resource :login, only: [:new, :create, :destroy], controller: "sessions"
+
+    # 管理者新規作成に関するルーティング
+    resource :admin_users, only: [:new, :create]
   end
 
   ## OAuth 専用ルーティング

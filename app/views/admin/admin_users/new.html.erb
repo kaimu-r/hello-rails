@@ -1,0 +1,33 @@
+<h1>新規登録</h1>
+
+<%= form_with model: [:admin, @admin_user] do |form| %>
+
+  <div>
+    <div>
+      <%= form.label :email, "メールアドレス" %>
+      <%= form.email_field :email %>
+      <% @admin_user.errors.full_messages_for(:email).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :password, "パスワード" %>
+      <%= form.password_field :password %>
+      <% @admin_user.errors.full_messages_for(:password).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation, "確認パスワード" %>
+      <%= form.password_field :password_confirmation %>
+      <% @admin_user.errors.full_messages_for(:password_confirmation).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "ログイン", new_admin_login_path %>
+  <%= form.submit "新規登録" %>
+<% end %>

@@ -5,10 +5,13 @@ class Admin::SessionsController < Admin::ApplicationController
   end
 
   def create
-    # メールアドレスで本人確認を行い、ログイン状態にする
     admin_user = AdminUser.find_by(email: params[:email])
 
-    if admin_user
+    if admin_user.nil?
+      return render :new, status: :unprocessable_entity
+    end
+
+    if admin_user.authenticate(params[:password])
       reset_session
       session[:admin_user_id] = admin_user.id
       redirect_to admin_users_url
