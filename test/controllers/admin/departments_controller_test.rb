@@ -1,13 +1,9 @@
 require "test_helper"
 
 class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
-    @params = { email: @admin_user.email, password: "12345678" }
-  end
-
   test "#idex 部署一覧ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # 部署一覧ページにGETリクエストを送信
     get admin_departments_url
 
@@ -21,7 +17,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#show 部署詳細ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # departmentsメソッドを使用して、テスト用の部署を取得
     department = departments(:test_department)
 
@@ -33,7 +30,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#new 部署新規作成ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # 部署新規作成ページにGETリクエストを送信
     get new_admin_department_url
 
@@ -42,7 +40,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#edit 部署編集ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # departmentsメソッドを使用して、テスト用の部署を取得
     department = departments(:test_department)
 
@@ -54,7 +53,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#create 部署の作成" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後に部署が作成されたかどうかを確認する
     assert_difference("Department.count") do
       post admin_departments_url, params: { department: { name: "add_department" } }
@@ -65,7 +65,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#create 無効なパラメータで部署が作成できないこと" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後に部署が作成されないことを確認する
     assert_no_difference("Department.count") do
       post admin_departments_url, params: { department: { name: "" } }
@@ -76,7 +77,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#update 部署情報の更新" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # departmentsメソッドを使用して、テスト用の部署を取得
     department = departments(:test_department)
 
@@ -96,7 +98,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#update 無効なパラメータで部署を更新できないこと" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # departmentsメソッドを使用して、テスト用の部署を取得
     department = departments(:test_department)
 
@@ -116,7 +119,8 @@ class Admin::DepartmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#destroy 部署の削除" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # departmentsメソッドを使用して、テスト用の部署を取得
     department = departments(:test_department)
 

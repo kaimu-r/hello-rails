@@ -1,13 +1,9 @@
 require "test_helper"
 
 class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
-    @params = { email: @admin_user.email, password: "12345678" }
-  end
-
   test "#index スキル一覧画面の表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # スキル一覧画面ページにGETリクエストを送信
     # admin_skills_urlメソッドを使用して、スキル一覧画面ページのURLを取得
     get admin_skills_url
@@ -22,7 +18,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#show スキル詳細ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -35,7 +32,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#new スキル新規作成ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # スキル新規作成ページにGETリクエストを送信
     get new_admin_skill_url
 
@@ -44,7 +42,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#edit スキル編集ページの表示" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -56,7 +55,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#create スキルの作成" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後にスキルが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、skillモデルのレコード数が1増えることを確認
     assert_difference("Skill.count") do
@@ -67,7 +67,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#create 無効なパラメータでスキルを作成できないこと" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後にスキルが作成されないことを確認
     assert_no_difference("Skill.count") do
       post admin_skills_url, params: { skill: { name: "" } }
@@ -77,7 +78,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#update スキル情報の更新" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -97,7 +99,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#update 無効なパラメータでスキルを更新できないこと" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
@@ -117,7 +120,8 @@ class Admin::SkillsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#destroy スキルの削除" do
-    login(@params)
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # skillsメソッドを使用して、テスト用のスキルを取得
     skill = skills(:test_skill)
 
