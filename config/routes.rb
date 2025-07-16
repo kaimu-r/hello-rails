@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   end
 
   ## OAuth 専用ルーティング
-  get "auth/google_oauth2/callback", to: "auth_callbacks#google_oauth2"
+  get "auth/google_oauth2/callback", to: "admin/auth_callbacks#google_oauth2"
 
   # resourcesの代わりに個別でルーティングを定義する場合
   # get 'users', to: 'users#index'

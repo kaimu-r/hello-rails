@@ -1,4 +1,4 @@
-class AuthCallbacksController < Admin::ApplicationController
+class Admin::AuthCallbacksController < Admin::ApplicationController
   skip_before_action :require_login
 
   def google_oauth2
