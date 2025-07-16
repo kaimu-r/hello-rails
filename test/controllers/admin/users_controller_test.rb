@@ -48,7 +48,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test "GET /users でユーザー一覧ページが表示される" do
+  test "#index でユーザー一覧ページが表示される" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # ユーザー一覧ページにGETリクエストを送信
     # admin_users_urlメソッドを使用して、ユーザー一覧ページのURLを取得
     get admin_users_url
@@ -57,7 +59,14 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "GET /users?name=value で名前でLIKE検索ができる" do
+  test "#index 未ログイン時にはユーザー一覧ページにアクセスできない" do
+    get admin_users_url
+    assert_response :found
+  end
+
+  test "#index 名前でLIKE検索ができる" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # full_nameで"三上"が部分一致で取得できるユーザー2名でテストを行う。
     shigeo = users(:shigeo) # "三上 茂雄"
     hana = users(:hana) # "三上 葉奈"
@@ -76,7 +85,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not_select "li", takeo.full_name
   end
 
-  test "GET /users?pref=value で都道府県絞り込みができる" do
+  test "#index 都道府県絞り込みができる" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # 住所の都道府県情報で,"福岡県"で取得できるユーザー1名でテストを行う。
     shigeo = users(:shigeo) # "福岡県"
     hana = users(:hana) # "栃木県"
@@ -95,7 +106,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not_select "li", takeo.full_name
   end
 
-  test "GET /users?birth=asc で誕生日が古→新に並ぶ" do
+  test "#index 誕生日が古→新に並ぶ" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # フィクスチャ: hana(一番古い) -> shigeo -> takeo(一番新しい)
     shigeo = users(:shigeo) # 1924-02-27
     hana = users(:hana) # 1924-01-17
@@ -115,7 +128,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert idx_hana < idx_shigeo && idx_shigeo < idx_takeo
   end
 
-  test "GET /users?per=10 で ユーザーが10件だけ描画される" do
+  test "#index ユーザーが10件だけ描画される" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # 表示させる用のユーザーを11人作成
     11.times do |i|
       # バリデーションをスキップして保存したいのでsaveメソッドで
@@ -128,7 +143,33 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_select "li", count: 10
   end
 
-  test "POST /users でユーザーとユーザースキルが1件ずつ増える + 画像を作成できる" do
+  test "#show ユーザー詳細ページが表示される" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
+    # usersメソッドを使用して、テスト用のユーザーを取得
+    user = users(:test_user)
+
+    # 作成したユーザーの詳細ページにGETリクエストを送信
+    # user_urlメソッドを使用して、ユーザーの詳細ページのURLを取得
+    get admin_user_url(user)
+
+    # レスポンスが200番台であることを確認
+    assert_response :success
+  end
+
+  test "#new 新規作成フォームが表示される" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
+    # ユーザー新規作成ページにGETリクエストを送信
+    get new_admin_user_url
+
+    # レスポンスが200番台であることを確認
+    assert_response :success
+  end
+
+  test "#create でユーザーとユーザースキルが1件ずつ増える + 画像を作成できる" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後にユーザーとユーザースキルが作成されたかどうかを確認する
     # assert_differenceメソッドを使用して、UserモデルとUserSkillモデルのレコード数が1増えることを確認
     assert_difference(["User.count", "UserSkill.count"]) do
@@ -142,7 +183,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
-  test "POST /users で無効パラメータの場合は作成されない" do
+  test "#create で無効パラメータの場合は作成されない" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # POSTリクエスト送信後にユーザーが作成されないことを確認
     assert_no_difference("User.count") do
       post admin_users_url, params: { user: { full_name: "" } }
@@ -151,7 +194,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "POST /users で不正なMIMEタイプのファイルの場合はユーザーが作成されない" do
+  test "#create で不正なMIMEタイプのファイルの場合はユーザーが作成されない" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # MIMEタイプが"text/plain"のファイルをPOSTリクエストで送信する
     params = valid_create_params
     params[:user][:image] = fixture_file_upload(Rails.root.join("test/fixtures/files/invalid_type.txt"), "text/plain")
@@ -165,7 +210,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "POST /users でファイルサイズが64KB以上のファイルをアップロードした場合はユーザーが作成されない" do
+  test "#create でファイルサイズが64KB以上のファイルをアップロードした場合はユーザーが作成されない" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # MIMEタイプが"text/plain"のファイルをPOSTリクエストで送信する
     params = valid_create_params
     params[:user][:image] = fixture_file_upload(Rails.root.join("test/fixtures/files/too_big.png"), "image/png")
@@ -179,15 +226,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "GET /users/new で新規作成フォームが表示される" do
-    # ユーザー新規作成ページにGETリクエストを送信
-    get new_admin_user_url
-
-    # レスポンスが200番台であることを確認
-    assert_response :success
-  end
-
-  test "GET /users/:id/edit で編集フォームが表示される" do
+  test "#edit 編集フォームが表示される" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
@@ -198,19 +239,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "GET /users/:id でユーザー詳細ページが表示される" do
-    # usersメソッドを使用して、テスト用のユーザーを取得
-    user = users(:test_user)
-
-    # 作成したユーザーの詳細ページにGETリクエストを送信
-    # user_urlメソッドを使用して、ユーザーの詳細ページのURLを取得
-    get admin_user_url(user)
-
-    # レスポンスが200番台であることを確認
-    assert_response :success
-  end
-
-  test "PATCH /users/:id でユーザー情報とユーザースキルを更新できる" do
+  test "#update ユーザー情報とユーザースキルを更新できる" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
@@ -231,7 +262,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "updated_user", user.full_name
   end
 
-  test "PATCH /users/:id で無効パラメータの場合は更新されない" do
+  test "#update 無効パラメータの場合は更新されない" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
@@ -250,7 +283,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "test_user", user.full_name
   end
 
-  test "DELETE /users/:id でユーザーが 1 件減る" do
+  test "#destroy ユーザーを削除できる" do
+    admin_user = AdminUser.create!(email: "test_admin_user@example.com", password: "12345678")
+    login_as(admin_user)
     # usersメソッドを使用して、テスト用のユーザーを取得
     user = users(:test_user)
 
