@@ -22,6 +22,8 @@ services:
       - db
       - chromium
     environment:
+      GOOGLE_CLIENT_ID: "$GOOGLE_CLIENT_ID"
+      GOOGLE_CLIENT_SECRET: "$GOOGLE_CLIENT_SECRET"
       CHROMIUM_REMOTE_URL: http://chromium:4444/wd/hub
 
   chromium:
