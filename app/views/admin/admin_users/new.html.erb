@@ -1,5 +1,7 @@
 <h1>新規登録</h1>
 
+<%= button_to "Googleでログイン", "/auth/google_oauth2", method: :post, data: { turbo: false } %>
+
 <%= form_with model: [:admin, @admin_user] do |form| %>
 
   <div>
