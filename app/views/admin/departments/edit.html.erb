@@ -1,3 +1,18 @@
+<% content_for :title, "#{@department.name}の編集 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <a href="<%= admin_departments_path %>">【管理者】部署一覧</a>
+    </li>
+    <li>
+      <a href="<%= admin_department_path(@department) %>"><%= "【管理者】#{@department.ame}の詳細" %></a>
+    </li>
+    <li>
+      <a href="<%= edit_admin_department_path(@department) %>"><%= "#{@department.name}の編集" %></a>
+    </li>
+  </ol>
+<% end %>
+
 <h1>部署の編集</h1>
 
 <%= render "form", department: @department %>
