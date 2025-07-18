@@ -1,3 +1,27 @@
+<% content_for :title, "ユーザー一覧 | hello-rails" %>
+<% content_for :head do %>
+  <meta name="description" content="ユーザー一覧ページです。">
+  <meta name="keywords" content="ユーザー一覧, ユーザー検索, hello-rails">
+
+  <meta property="og:title" content="ユーザー一覧 | hello-rails">
+  <meta property="og:type" content="index">
+  <meta property="og:url" content="<%= users_url %>">
+  <meta property="og:description" content="ユーザー一覧ページです"。>
+  <meta property="og:site_name" content="hello-rails">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ユーザー一覧 | hello-rails">
+  <meta name="twitter:description" content="ユーザー一覧ページです">
+<% end %>
+
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <a href="<%= users_path %>">ユーザー一覧</a>
+    </li>
+  </ol>
+<% end %>
+
 <h1>ユーザー一覧</h1>
 
 <%= form_with url: "/users", method: :get do |form| %>
