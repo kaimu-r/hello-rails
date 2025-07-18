@@ -1,3 +1,15 @@
+<% content_for :title, "#{@skill.name}の詳細 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <a href="<%= admin_skills_path %>">【管理者】スキル一覧</a>
+    </li>
+    <li>
+      <a href="<%= admin_skill_path(@skill) %>"><%= "【管理者】 #{@skill.name}の詳細" %></a>
+    </li>
+  </ol>
+<% end %>
+
 <h1><%= @skill.name %></h1>
 
 <section>

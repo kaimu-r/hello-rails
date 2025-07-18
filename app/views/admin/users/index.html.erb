@@ -1,3 +1,12 @@
+<% content_for :title, "ユーザー一覧 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <a href="<%= admin_users_path %>">【管理者】ユーザー一覧</a>
+    </li>
+  </ol>
+<% end %>
+
 <h1>ユーザー一覧</h1>
 
 <%= form_with url: "/admin/users", method: :get do |form| %>

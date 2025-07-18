@@ -1,3 +1,32 @@
+<% content_for :title, "#{@user.full_name} | hello-rails" %>
+<% content_for :head do %>
+  <meta name="description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
+  <meta name="keywords" content='<%= "#{@user.full_name}の詳細, hello-rails" %>'>
+
+  <meta property="og:title" content='<%= "#{@user.full_name} | hello-rails" %>'>
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="<%= user_url(@user) %>">
+  <meta property="og:description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
+  <meta property="og:image" content="<%= @user.image.present? ? image_user_url(@user) : '' %>">
+  <meta property="og:site_name" content="hello-rails">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content='<%= "#{@user.full_name} | hello-rails" %>'>
+  <meta name="twitter:description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
+  <meta name="twitter:image" content="<%= @user.image.present? ? image_user_url(@user) : '' %>">
+<% end %>
+
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <a href="<%= users_path %>">ユーザー一覧</a>
+    </li>
+    <li>
+      <a href="<%= user_path(@user) %>"><%= @user.full_name %></a>
+    </li>
+  </ol>
+<% end %>
+
 <h1><%= @user.full_name %></h1>
 
 <section>
