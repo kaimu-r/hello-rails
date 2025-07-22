@@ -1,19 +1,32 @@
 <% content_for :title, "#{@user.full_name} | hello-rails" %>
 <% content_for :head do %>
-  <meta name="description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
-  <meta name="keywords" content='<%= "#{@user.full_name}の詳細, hello-rails" %>'>
+  <%= tag.meta name: "description", content: "#{@user.full_name}の詳細画面です" %>
+  <%= tag.meta name: "keywords", content: "#{@user.full_name}の詳細, hello-rails" %>
 
-  <meta property="og:title" content='<%= "#{@user.full_name} | hello-rails" %>'>
-  <meta property="og:type" content="profile">
-  <meta property="og:url" content="<%= user_url(@user) %>">
-  <meta property="og:description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
-  <meta property="og:image" content="<%= @user.image.present? ? image_user_url(@user) : '' %>">
-  <meta property="og:site_name" content="hello-rails">
+  <%= tag.meta property: "og:title", content: "#{@user.full_name} | hello-rails" %>
+  <%= tag.meta property: "og:type", content: "profile" %>
+  <%= tag.meta property: "og:url", content: user_url(@user) %>
+  <%= tag.meta property: "og:description", content: "#{@user.full_name}の詳細画面です" %>
+  <%= tag.meta property: "og:image", content: @user.image.present? ? image_user_url(@user) : '' %>
+  <%= tag.meta property: "og:site_name", content: "hello-rails" %>
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content='<%= "#{@user.full_name} | hello-rails" %>'>
-  <meta name="twitter:description" content='<%= "#{@user.full_name}の詳細画面です" %>'>
-  <meta name="twitter:image" content="<%= @user.image.present? ? image_user_url(@user) : '' %>">
+  <%= tag.meta name: "twitter:card", content: "summary_large_image" %>
+  <%= tag.meta name: "twitter:title", content: "#{@user.full_name} | hello-rails" %>
+  <%= tag.meta name: "twitter:description", content: "#{@user.full_name}の詳細画面です" %>
+  <%= tag.meta name: "twitter:image", content: @user.image.present? ? image_user_url(@user) : '' %>
+
+  <script type="application/ld+json">
+    <%= {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "url": user_url(@user),
+    "mainEntity": {
+        "@type": "Person",
+        "name": @user.full_name,
+        "url": user_url(@user)
+    }
+    }.to_json.html_safe %>
+  </script>
 <% end %>
 
 <% content_for :breadcrumb do %>

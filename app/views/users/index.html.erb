@@ -1,17 +1,39 @@
 <% content_for :title, "ユーザー一覧 | hello-rails" %>
 <% content_for :head do %>
-  <meta name="description" content="ユーザー一覧ページです。">
-  <meta name="keywords" content="ユーザー一覧, ユーザー検索, hello-rails">
+  <%= tag.meta name: "description", content: "ユーザー一覧ページです。" %>
+  <%= tag.meta name: "keywords", content: "ユーザー一覧, ユーザー検索, hello-rails" %>
 
-  <meta property="og:title" content="ユーザー一覧 | hello-rails">
-  <meta property="og:type" content="index">
-  <meta property="og:url" content="<%= users_url %>">
-  <meta property="og:description" content="ユーザー一覧ページです"。>
-  <meta property="og:site_name" content="hello-rails">
+  <%= tag.meta property: "og:title", content: "ユーザー一覧 | hello-rails" %>
+  <%= tag.meta property: "og:type", content: "index" %>
+  <%= tag.meta property: "og:url", content: users_url %>
+  <%= tag.meta property: "og:description", content: "ユーザー一覧ページです" %>
+  <%= tag.meta property: "og:site_name", content: "hello-rails" %>
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ユーザー一覧 | hello-rails">
-  <meta name="twitter:description" content="ユーザー一覧ページです">
+  <%= tag.meta name: "twitter:card", content: "summary_large_image" %>
+  <%= tag.meta name: "twitter:title", content: "ユーザー一覧 | hello-rails" %>
+  <%= tag.meta name: "twitter:description", content: "ユーザー一覧ページです" %>
+
+  <script type="application/ld+json">
+    <%= {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ユーザー一覧",
+          "item": users_url
+      }]
+    }.to_json.html_safe %>
+  </script>
+
+  <script type="application/ld+json">
+    <%= {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "ユーザー一覧 | hello-rails",
+      "url": users_url,
+    }.to_json.html_safe %>
+  </script>
 <% end %>
 
 <% content_for :breadcrumb do %>
