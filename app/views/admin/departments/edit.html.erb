@@ -2,13 +2,13 @@
 <% content_for :breadcrumb do %>
   <ol>
     <li>
-      <a href="<%= admin_departments_path %>">【管理者】部署一覧</a>
+      <%= link_to "【管理者】部署一覧", admin_departments_path %>
     </li>
     <li>
-      <a href="<%= admin_department_path(@department) %>"><%= "【管理者】#{@department.ame}の詳細" %></a>
+      <%= link_to "【管理者】#{@department.name}の詳細", admin_department_path(@department) %>
     </li>
     <li>
-      <a href="<%= edit_admin_department_path(@department) %>"><%= "#{@department.name}の編集" %></a>
+      <%= link_to "#{@department.name}の編集", edit_admin_department_path(@department) %>
     </li>
   </ol>
 <% end %>
