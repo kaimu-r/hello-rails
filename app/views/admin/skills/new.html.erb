@@ -1,3 +1,15 @@
+<% content_for :title, "新規スキルの作成 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】スキル一覧", admin_skills_path %>
+    </li>
+    <li>
+    1<%= link_to "新規スキルの作成", new_admin_skill_path %>
+    </li>
+  </ol>
+<% end %>
+
 <h1>新しいスキルの作成しよう</h1>
 
 <%= render "form", skill: @skill %>

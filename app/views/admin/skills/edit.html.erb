@@ -1,3 +1,18 @@
+<% content_for :title, "#{@skill.name}の編集 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】スキル一覧", admin_skills_path %>
+    </li>
+    <li>
+      <%= link_to "【管理者】 #{@skill.name}の詳細", admin_skill_path(@skill) %>
+    </li>
+    <li>
+      <%= link_to "#{@skill.name}の編集", edit_admin_skill_path(@skill) %>
+    </li>
+  </ol>
+<% end %>
+
 <h1>スキルの編集</h1>
 
 <%= render "form", skill: @skill %>

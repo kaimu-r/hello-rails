@@ -1,4 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "部署一覧 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】部署一覧", admin_departments_path %>
+    </li>
+  </ol>
+<% end %>
 
 <h1>部署一覧</h1>
 

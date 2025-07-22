@@ -1,3 +1,15 @@
+<% content_for :title, "新規ユーザーの作成 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】ユーザー一覧", admin_users_path %>
+    </li>
+    <li>
+      <%= link_to "新規ユーザーの作成", new_admin_user_path %>
+    </li>
+  </ol>
+<% end %>
+
 <h1>新規ユーザーを作成しよう</h1>
 
 <%= render "form", user: @user %>

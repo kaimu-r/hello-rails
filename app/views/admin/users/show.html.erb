@@ -1,3 +1,15 @@
+<% content_for :title, "#{@user.full_name}の詳細 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】ユーザー一覧", admin_users_path %>
+    </li>
+    <li>
+      <%= link_to "#{@user.full_name}の詳細", admin_user_path(@user) %>
+    </li>
+  </ol>
+<% end %>
+
 <h1><%= @user.full_name %></h1>
 
 <section>

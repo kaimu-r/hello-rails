@@ -1,3 +1,15 @@
+<% content_for :title, "新規部署の作成 | 管理者 | hello-rails" %>
+<% content_for :breadcrumb do %>
+  <ol>
+    <li>
+      <%= link_to "【管理者】部署一覧", admin_departments_path %>
+    </li>
+    <li>
+      <%= link_to "新規部署の作成", new_admin_department_path %>
+    </li>
+  </ol>
+<% end %>
+
 <h1>新しい部署の作成しよう</h1>
 
 <%= render "form", department: @department %>
