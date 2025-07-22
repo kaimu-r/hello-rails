@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_07_11_060956) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_22_082057) do
   create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_07_11_060956) do
     t.bigint "department_id"
     t.binary "image"
     t.index ["department_id"], name: "index_users_on_department_id"
+    t.index ["full_name"], name: "index_users_on_full_name"
   end
 
   add_foreign_key "user_skills", "skills"
