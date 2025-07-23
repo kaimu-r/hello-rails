@@ -1,45 +1,46 @@
-desc "CSV をインポートして User を作成する"
+# frozen_string_literal: true
+
+desc 'CSV をインポートして User を作成する'
 namespace :users do
   task :import, [:file_path] => :environment do |_, args|
-    abort "ファイルパスを指定してください。" unless args.file_path
+    abort 'ファイルパスを指定してください。' unless args.file_path
 
     file_path = Rails.root.join(args.file_path)
-    abort "ファイルが見つかりません。" unless File.exist?(file_path)
+    abort 'ファイルが見つかりません。' unless File.exist?(file_path)
 
     # 件数をカウントする変数
     imported_num = 0 # 新規登録に成功
     failed_num = 0 # バリデーションエラーなどで失敗
-    duplicated_num = 0  # emailが既に存在していてスキップ
+    duplicated_num = 0 # emailが既に存在していてスキップ
 
     # department_idをランダムに割り当てるため、事前に全てのIDを取得する
     department_ids = Department.pluck(:id)
 
-    puts "インポート スタート！"
+    puts 'インポート スタート！'
     CSV.foreach(file_path, headers: true) do |row|
-
-      gender = if row["gender"] == "男"
-        :male
-      elsif row["gender"] == "女"
-        :female
-      else
-        :other
-      end
+      gender = if row['gender'] == '男'
+                 :male
+               elsif row['gender'] == '女'
+                 :female
+               else
+                 :other
+               end
 
       begin
         User.create!(
-          full_name: row["full_name"],
-          full_name_kana: row["full_name_kana"],
+          full_name: row['full_name'],
+          full_name_kana: row['full_name_kana'],
           gender:,
-          home_phone: row["home_phone"],
-          mobile_phone: row["mobile_phone"],
-          email: row["email"],
-          postal_code: row["postal_code"],
-          prefecture: row["prefecture"],
-          city: row["city"],
-          town: row["town"],
-          address_block: row["address_block"],
-          building: row["building"],
-          birth_date: row["birth_date"],
+          home_phone: row['home_phone'],
+          mobile_phone: row['mobile_phone'],
+          email: row['email'],
+          postal_code: row['postal_code'],
+          prefecture: row['prefecture'],
+          city: row['city'],
+          town: row['town'],
+          address_block: row['address_block'],
+          building: row['building'],
+          birth_date: row['birth_date'],
           department_id: department_ids.sample
         )
         imported_num += 1

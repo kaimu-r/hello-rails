@@ -1,4 +1,6 @@
-class UserSkill < ApplicationRecord
+# frozen_string_literal: true
+
+class UserSkill < ApplicationRecord # :nodoc:
   belongs_to :user
   belongs_to :skill
 end
