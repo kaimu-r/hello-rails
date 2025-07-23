@@ -74,6 +74,15 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # See https://github.com/rubocop/rubocop
+  gem 'rubocop', require: false
+
+  # See https://github.com/presidentbeef/brakeman
+  gem 'brakeman', require: false
+
+  # See https://github.com/flyerhzm/bullet
+  gem 'bullet'
 end
 
 group :test do
