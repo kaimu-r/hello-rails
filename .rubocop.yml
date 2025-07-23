@@ -1,0 +1,6 @@
+AllCops:
+  Exclude:
+    - "config.ru"
+    - "db/**/*"
+    - "config/**/*"
+    - "bin/*"
