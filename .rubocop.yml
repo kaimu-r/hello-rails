@@ -1,6 +1,49 @@
 AllCops:
+  TargetRubyVersion: 3.2
+  DisplayCopNames: true
+
   Exclude:
-    - "config.ru"
-    - "db/**/*"
-    - "config/**/*"
     - "bin/*"
+    - "db/schema.rb"
+    - "config.ru"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/GlobalStdStream:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 25
+  Exclude:
+    - "config/environments/*"
+    - "lib/tasks/*.rake"
+    - "test/**/*"
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - "db/migrate/*"
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - "test/**/*"
