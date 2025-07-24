@@ -86,9 +86,9 @@ class User < ApplicationRecord
   # imageフィールドをバイナリデータに変換する
   after_validation :extract_image_binary
 
-  # 検索用のクエリを発行するメソッドを作成する
-  # scopeメソッドを使用してActiveRecord::Relationオブジェクトを返しクエリの構築を行う
-  scope :search_by_full_name, ->(full_name) { where('full_name LIKE ?', "%#{full_name}%") if full_name.present? }
+    # 検索用のクエリを発行するメソッドを作成する
+    # scopeメソッドを使用してActiveRecord::Relationオブジェクトを返しクエリの構築を行う
+    scope :search_by_full_name, ->(full_name) { where("full_name LIKE ?", full_name + "%") }
 
   scope :search_by_prefecture, ->(prefecture) { where('prefecture = ?', prefecture) if prefectures.value?(prefecture) }
 
