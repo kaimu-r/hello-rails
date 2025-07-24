@@ -78,7 +78,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_url, params: { per: '10' }
     assert_response :success
 
-    assert_select 'li', count: 10
+    assert_select 'ul > li', count: 10
   end
 
   test 'GET /users/:id でユーザー詳細ページが表示される' do
