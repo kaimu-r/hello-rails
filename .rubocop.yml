@@ -1,36 +1,47 @@
 AllCops:
+  # Ruby3.2に固定して別バージョン用の誤検知を避ける
   TargetRubyVersion: 3.2
-  DisplayCopNames: true
 
+  # 再生成や触らないコードなので解析対象から完全除外する
   Exclude:
     - "bin/*"
     - "db/schema.rb"
     - "config.ru"
 
+# すべてのファイルに frozen_string_literal: true をつけるコストは高いため使用しない
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+# Railsのgeneraterではダブルクオーテーションを使用しているため差分ノイズが増える。統一する価値 < コスト と判断
 Style/StringLiterals:
   Enabled: false
 
+# [:a, :b] を %i[a b] に強制する理由は特にない
 Style/SymbolArray:
   Enabled: false
 
+# ["a", "b"] を %w[a b] に強制する理由は特にない
 Style/WordArray:
   Enabled: false
 
+# config/puma.rbのみでしか使用されておらず、除外するメリットなし
 Style/GlobalStdStream:
   Enabled: false
 
+# generatorで作成されたファイルでのエラーが大半のため除外する
 Style/RedundantFetchBlock:
   Enabled: false
 
+# アプリケーション全体で全クラス/モジュールにドキュメント必須はやりすぎのため除外する
 Style/Documentation:
   Enabled: false
 
+# 配列のブラケット内のスペースの統一は価値が薄いため除外する
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
+# 環境設定ファイルやRake/テストはブロックが長くなることが多いので除外
+# それ以外は25行超えたら分割を検討して可読性を高める
 Metrics/BlockLength:
   Max: 25
   Exclude:
@@ -38,11 +49,15 @@ Metrics/BlockLength:
     - "lib/tasks/*.rake"
     - "test/**/*"
 
+# メソッドの肥大化は可読性を下げるので20行で警告を出す
+# migrationファイルは履歴を壊さないため除外
 Metrics/MethodLength:
   Max: 20
   Exclude:
     - "db/migrate/*"
 
+# クラスの肥大化は可読性を下げるので200行で警告を出す
+# testは大きくなりがちで分割コストも高いので除外
 Metrics/ClassLength:
   Max: 200
   Exclude:
