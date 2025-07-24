@@ -29,4 +29,15 @@ class UsersController < ApplicationController
 
     send_data user.image, filename: 'user_image', type: 'image/png', disposition: 'inline'
   end
+
+  private
+
+  # 検索パラメータを受け取る
+  def search_params
+    params.permit(:name, :pref, :birth, :per, :page)
+  end
+
+  def per_page(per)
+    %w[10 50 100].include?(per) ? per : 10
+  end
 end
