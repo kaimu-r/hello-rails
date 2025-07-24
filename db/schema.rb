@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_07_22_082057) do
     t.date "birth_date"
     t.bigint "department_id"
     t.binary "image"
+    t.index ["birth_date"], name: "index_users_on_birth_date"
     t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["full_name"], name: "index_users_on_full_name"
   end
