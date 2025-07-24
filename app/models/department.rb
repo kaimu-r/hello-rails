@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class Department < ApplicationRecord # :nodoc:
+class Department < ApplicationRecord
   # 部署は複数のユーザーを持つ
   has_many :users, dependent: :nullify
 

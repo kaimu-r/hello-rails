@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class User < ApplicationRecord # :nodoc:
+class User < ApplicationRecord
   # ユーザーは1つの部署に所属する
   belongs_to :department
 

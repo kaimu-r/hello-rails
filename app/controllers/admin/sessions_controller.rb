@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Admin
-  class SessionsController < Admin::ApplicationController # :nodoc:
+  class SessionsController < Admin::ApplicationController
     skip_before_action :require_login, only: %i[new create]
     def new
       # ログインフォームを表示するのみ

@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class AdminUser < ApplicationRecord # :nodoc:
+class AdminUser < ApplicationRecord
   has_secure_password
 
   validates :email,

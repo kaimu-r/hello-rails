@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Admin
-  class UsersController < Admin::ApplicationController # :nodoc:
+  class UsersController < Admin::ApplicationController
     # ユーザー一覧ページ
     def index
       @prefectures = User.prefectures

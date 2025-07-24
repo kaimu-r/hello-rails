@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class PhoneFormatValidator < ActiveModel::EachValidator # :nodoc:
+class PhoneFormatValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     # 空の値はバリデーションをスキップする
     return if value.blank?

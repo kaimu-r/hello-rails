@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 desc 'CSV をインポートして User を作成する'
 namespace :users do
   task :import, [:file_path] => :environment do |_, args|

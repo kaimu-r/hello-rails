@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class UsersController < ApplicationController # :nodoc:
+class UsersController < ApplicationController
   # ユーザー一覧ページ
   def index
     @prefectures = User.prefectures

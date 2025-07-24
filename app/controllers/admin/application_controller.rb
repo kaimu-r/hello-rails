@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Admin
-  class ApplicationController < ActionController::Base # :nodoc:
+  class ApplicationController < ActionController::Base
     layout 'admin/application'
 
     before_action :require_login

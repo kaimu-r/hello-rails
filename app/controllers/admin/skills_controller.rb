@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Admin
-  class SkillsController < Admin::ApplicationController # :nodoc:
+  class SkillsController < Admin::ApplicationController
     # スキル一覧ページ
     def index
       @skills = Skill.all

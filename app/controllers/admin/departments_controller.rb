@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Admin
-  class DepartmentsController < Admin::ApplicationController # :nodoc:
+  class DepartmentsController < Admin::ApplicationController
     # 部署一覧ページ
     def index
       @departments = Department.all

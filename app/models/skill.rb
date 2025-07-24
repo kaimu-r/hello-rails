@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class Skill < ApplicationRecord # :nodoc:
+class Skill < ApplicationRecord
   # スキルはUserSkillsモデルを経由して複数のユーザーが取得できる
   has_many :user_skills
   has_many :users, through: :user_skills
