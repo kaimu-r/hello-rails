@@ -2,7 +2,7 @@ AllCops:
   # Ruby3.2に固定して別バージョン用の誤検知を避ける
   TargetRubyVersion: 3.2
 
-  # 再生成や触らないコードなので解析対象から完全除外する
+  # railsが自動生成するファイルは除外する
   Exclude:
     - "bin/*"
     - "db/schema.rb"
