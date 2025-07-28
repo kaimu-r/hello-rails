@@ -4,6 +4,8 @@ class Admin::ApplicationController < ActionController::Base
   before_action :require_login
   helper_method :current_admin_user, :logged_in?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   private
     def current_admin_user
       @current_admin_user ||= AdminUser.find_by(id: session[:admin_user_id])
@@ -18,5 +20,9 @@ class Admin::ApplicationController < ActionController::Base
       if !logged_in?
         redirect_to new_admin_login_path
       end
+    end
+
+    def record_not_found
+      render "errors/not_found", layout: "error", status: :not_found
     end
 end
