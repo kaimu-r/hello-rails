@@ -2,8 +2,10 @@ module Admin
   class ApplicationController < ActionController::Base
     layout 'admin/application'
 
-    before_action :require_login
-    helper_method :current_admin_user, :logged_in?
+  before_action :require_login
+  helper_method :current_admin_user, :logged_in?
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
     private
 
@@ -17,9 +19,12 @@ module Admin
 
     # ログインユーザーが存在しない場合はログイン画面にリダイレクトする
     def require_login
-      return if logged_in?
-
-      redirect_to new_admin_login_path
+      if !logged_in?
+        redirect_to new_admin_login_path
+      end
     end
-  end
+
+    def record_not_found
+      render "errors/not_found", layout: "error", status: :not_found
+    end
 end
