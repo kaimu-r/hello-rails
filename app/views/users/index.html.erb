@@ -48,16 +48,16 @@
 
 <%= form_with url: "/users", method: :get do |form| %>
   <%= form.label :name, "名前" %>
-  <%= form.text_field :name, value: @param_name %>
+  <%= form.text_field :name, value: @search_params[:name] %>
 
   <%= form.label :pref, "都道府県" %>
-  <%= form.select :pref, options_for_select(@prefectures.values, @param_pref), { include_blank: "指定なし" } %>
+  <%= form.select :pref, options_for_select(@prefectures.values, @search_params[:pref]), { include_blank: "指定なし" } %>
 
   <%= form.label :birth, "誕生日順" %>
-  <%= form.select :birth, options_for_select([["古い順（年齢が高い）", "asc"], ["新しい順（年齢が低い）", "desc"]], @param_birth), { include_blank: "指定なし" } %>
+  <%= form.select :birth, options_for_select([["古い順（年齢が高い）", "asc"], ["新しい順（年齢が低い）", "desc"]], @search_params[:birth]), { include_blank: "指定なし" } %>
 
   <%= form.label :per, "表示件数" %>
-  <%= form.select :per, options_for_select([["10件", 10], ["50件", 50], ["100件", 100]], @param_per), { include_blank: "指定なし" } %>
+  <%= form.select :per, options_for_select([["10件", 10], ["50件", 50], ["100件", 100]], @search_params[:per]), { include_blank: "指定なし" } %>
 
   <%= form.submit "検索" %>
 <% end %>

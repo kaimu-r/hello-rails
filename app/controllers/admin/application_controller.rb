@@ -1,12 +1,14 @@
-class Admin::ApplicationController < ActionController::Base
-  layout 'admin/application'
+module Admin
+  class ApplicationController < ActionController::Base
+    layout 'admin/application'
 
   before_action :require_login
   helper_method :current_admin_user, :logged_in?
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-  private
+    private
+
     def current_admin_user
       @current_admin_user ||= AdminUser.find_by(id: session[:admin_user_id])
     end

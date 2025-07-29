@@ -7,8 +7,8 @@ class PhoneFormatValidator < ActiveModel::EachValidator
     phone_regex = /\A\d{10,11}\z/
 
     # 正規表現にマッチしない場合はエラーメッセージを追加
-    unless value.match?(phone_regex)
-      record.errors.add(attribute, "は10〜11桁の数字で入力してください")
-    end
+    return if value.match?(phone_regex)
+
+    record.errors.add(attribute, 'は10〜11桁の数字で入力してください')
   end
 end
