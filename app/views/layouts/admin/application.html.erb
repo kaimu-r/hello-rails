@@ -5,20 +5,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header>
-      ここは管理画面です
-      <% if logged_in? %>
-        ようこそ <%= current_admin_user.email %> さん
-        <%= button_to "ログアウト", admin_login_path, method: :delete %>
-      <% end %>
-    </header>
-    <%= yield :breadcrumb %>
+  <body class="flex flex-col items-start gap-[100px] w-screen bg-gray-100">
     <%= yield %>
   </body>
 </html>
