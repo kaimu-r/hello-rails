@@ -7,6 +7,93 @@
   </ol>
 <% end %>
 
+
+<div class="flex items-start self-stretch">
+  <div class="flex flex-col justify-between items-start self-stretch w-[240px] h-screen pt-xl px-lg pb-lg border-r border-gray-200 border-solid bg-white">
+    <div class="flex flex-col items-start gap-3xl self-stretch">
+      <div class="flex flex-col items-center w-[192px] gap-xs">
+        <div class="flex items-center justify-center w-[150px] h-5xl aspect-[15/8] bg-gray-900">
+          <%= image_tag "Group.svg", alt: "Group", class: "h-[57.162px] w-[127.047px] shrink-0" %>
+        </div>
+        <p class="text-gray-900 text-center text-xs not-italic font-bold leading-[18px] tracking-[0.24px]">
+          ユーザー管理画面
+        </p>
+      </div>
+      <div class="flex flex-col items-start gap-xxl self-stretch">
+        <div class="flex h-xxl py-xs pl-xs items-center gap-xs self-stretch rounded-sm bg-gold-100">
+          <%= image_tag "user.svg", alt: "user", class: "h-lg w-lg" %>
+          <p class="text-gray-900 text-[14px] not-italic font-bold leading-[21px] tracking-[0.28px]">
+            ユーザー
+          </p>
+        </div>
+        <div class="flex h-xxl py-xs pl-xs items-center gap-xs self-stretch">
+          <%= image_tag "departments.svg", alt: "departments", class: "h-lg w-lg" %>
+          <p class="text-gray-900 text-[14px] not-italic font-bold leading-[21px] tracking-[0.28px]">
+            部署
+          </p>
+        </div>
+        <div class="flex h-xxl py-xs pl-xs items-center gap-xs self-stretch">
+          <%= image_tag "skills.svg", alt: "skills", class: "h-lg w-lg" %>
+          <p class="text-gray-900 text-[14px] not-italic font-bold leading-[21px] tracking-[0.28px]">
+            スキル
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col justify-end items-start gap-xl p-xs self-stretch">
+      <div class="flex flex-col items-start gap-xxs self-stretch">
+        <p class="text-gray-900 text-[14px] not-italic font-bold leading-[21px] tracking-[0.28px]">ユーザー名</p>
+        <p class="text-gray-600 text-sm not-italic font-bold leading-[18px] tracking-[0.24px]">人事部</p>
+        <p class="text-gray-600 text-sm not-italic font-normal leading-[18px] tracking-[0.24px]">
+          <%= current_admin_user.email %>
+        </p>
+      </div>
+      <div class="flex items-center gap-3xs">
+        <%= image_tag "logout.svg", alt: "logout", class: "h-lg w-lg aspect-square"%>
+        <p class="text-gray-900 text-[14px] not-italic font-bold leading-[21px] tracking-[0.28px]">ログアウト</p>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col flex-1 shrink-0 basis-0 pt-lg pb-5xl px-lg items-start gap-lg">
+    <div class="flex flex-col items-start gap-[10px] self-stretch">
+      <div class="flex items-start gap-xxs">
+        <p class="text-gray-600 text-md not-italic font-normal leading-lg tracking-[0.32px]">Home</p>
+        <%= image_tag "chevron-right.svg", alt: "chevron-right", class: "h-lg w-lg aspect-square" %>
+        <p class="text-gray-900 text-md not-italic font-bold leading-lg tracking-[0.32px]">ユーザー一覧</p>
+      </div>
+    </div>
+    <div class="flex py-[6px] justify-between items-center self-stretch">
+      <p class="text-gray-900 text-[20px] not-italic font-bold leading-[30px] tracking-[0.4px]">ユーザー一覧</p>
+      <button class="flex py-md px-lg items-center gap-xxs rounded-[6px] border-gray-400 bg-white">
+        <p class="text-gray-700 text-md not-italic font-bold leading-lg tracking-[0.32px]">
+          新規作成
+        </p>
+      </button>
+    </div>
+    <%= form_with url: "/admin/users", method: :get, html: { class: "flex flex-col p-md items-start gap-md self-stretch rounded-xs bg-white" } do |form| %>
+      <div class="flex py-[6px] items-start self-stretch">
+        <p class="text-gray-900 text-[18px] not-italic font-bold leading-xs tracking-[0.36px]">検索フォーム</p>
+      </div>
+      <div class="flex flex-col items-center gap-md self-stretch">
+        <div class="flex items-start gap-md self-stretch">
+          <div class="flex w-[320px] items-start gap-xs">
+            <div class="flex w-[320px] flex-col items-start gap-xs shrink-0">
+              <div class="flex items-center gap-xs self-stretch">
+                <p class="text-gray-900 text-sm not-italic font-bold leading-sm tracking-[0.56px]">氏名</p>
+              </div>
+              <></>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-between items-start self-stretch">
+        
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!--
 <h1>ユーザー一覧</h1>
 
 <%= form_with url: "/admin/users", method: :get do |form| %>
@@ -36,3 +123,4 @@
 <%= paginate @users %>
 
 <%= link_to "新しいユーザーを作成", new_admin_user_path %>
+-->
